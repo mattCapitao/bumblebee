@@ -1,105 +1,4 @@
 
-<html>
-
-<style>
-body{
-
-    background-color: black;
-}
-
-#maze {
-    height:400px;width:900px;padding:0;margin:0;border:0;
-    background-color:azure;
-    position:relative;
-    margin:auto;
-    overflow:hidden;
-}
-
-#sky{
-    height:250px;width:900px;padding:0;margin:0;border:0;
-    background-color:skyblue;
-    position:absolute;
-    top:0;left:0;
-    z-index:200;
-}
-
-#ground{
-    height:150px;width:900px;padding:0;margin:0;border:0;
-    background-color:green;
-    position:absolute;
-    bottom:0;left:0;
-    z-index:200;
-}
-
-#hive{
-    height:100px;width:100px;padding:0;margin:0;border:0;
-    background-image: url("hive.png");
-    background-size: contain;
-    position:absolute;
-    right:10;
-    top:200;
-    z-index:300;
-}
-
-.flower{
-    padding:0;margin:0;border:0;
-    height:85px;width:40px;
-    background-size: contain;
-    position:absolute;
-    z-index:9900;
-}
-
-.f1{background-image: url("flower1.png"); top:270px;left:150px;}
-.f2{background-image: url("flower2.png"); top:240px;left:295px;}
-.f3{background-image: url("flower3.png"); top:275px;left:460px;}
-.f4{background-image: url("flower4.png"); top:230px;left:600px;}
-
-#avatar {
-    height:40px;width:40px;padding:0;margin:0;border:0;
-    background-image: url("bee.png");
-    background-size: contain;
-    position:absolute;
-    z-index:9999;
-    top:50%;
-    left:20px;
-}
-
-.bird {
-    height:80px;width:90px;padding:0;margin:0;border:0;
-    background-image: url("bird.webp");
-    background-size: contain;
-    position:absolute;
-    z-index:9999;
-    top:50%;
-    left:-90px;
-}
-
-</style>
-
-
-<body>
-
-<div id="maze">
-    <div id="avatar"></div>
-    <div id="hive"></div>
-    <div class="flower f1"></div>
-    <div class="flower f2"></div>
-    <div class="flower f3"></div>
-    <div class="flower f4"></div>
-    <div id="sky">
-
-    </div>
-    <div id="ground">
-
-    </div>
-
-</div>
-
-</body>
-
-<script src="jquery-3.2.1.min.js"></script>
-<script>
-
     var keyMap = {37:false, 38:false, 39:false, 40:false}
     var l="+=0",t="+=0", mv=3;
     var sprite='bee.png',spriteLast=null;
@@ -128,7 +27,9 @@ body{
         if(spriteLast!=null){sprite=spriteLast;}
 
         if(l == '+='+mv && t == '-='+mv){sprite="bee_up_right.png" }
+
         if(l == '+='+mv && t == '+=0'){sprite="bee_right.png"}
+        
         if(l == '+='+mv && t == '+='+mv){
             sprite="bee_down_right.png"
         }
@@ -161,7 +62,7 @@ body{
         if(newBird > 990){
             birdSpeed=rng(1, 6);
             birdHeight=rng(20,70);
-            $("#maze").append('<div class="bird" style="top:'+birdHeight+'%;" data-speed="'+birdSpeed+'"></div>');
+            $("#game").append('<div class="bird" style="top:'+birdHeight+'%;" data-speed="'+birdSpeed+'"></div>');
             birdSpeed=0;
         }
 
@@ -186,8 +87,3 @@ body{
      }  
     }, 20);
 
-
-
-</script>
-
-</html>
