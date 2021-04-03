@@ -56,7 +56,6 @@ function rng(min, max) {
     return Math.floor(random_number);
 }
 
-
 function birdFood(){
     console.log("Bird Food!");
     gameRunning = false;
@@ -87,7 +86,6 @@ function missionComplete(){
     $("#start").slideDown(1000);
 }
 
-
 window.setInterval(function () {
     if (gameRunning) {
 
@@ -117,19 +115,15 @@ window.setInterval(function () {
                     $("#avatar").attr('data-pollen',avatarPollen);
                     hiveHoney=($("#hive").attr('data-honey')*1) + 10
                     $("#hive").attr('data-honey', hiveHoney);
-                    score = score + 2500;
-
-                    if(hiveHoney > 99){
-                        missionComplete();
-                    }
+                    score = score + 2500;  
                }
             }
-
+            if(hiveHoney > 99){missionComplete();}
         });
 
         newFlower = rng(1,1000);
         
-       if( newFlower > newFlowerThreshold){
+        if( newFlower > newFlowerThreshold){
             flowerType = rng(1,4);
             flowerX= rng(170,315);
             flowerY= rng(20,750);
@@ -144,8 +138,10 @@ window.setInterval(function () {
         $(".flower").each(function (element) {
             currentTimeSeconds =  new Date().getTime() / 1000;
             if($(this).attr("data-expire") <=  currentTimeSeconds){
-                $(this).fadeOut("slow");
-                $(this).remove();
+                $(this).fadeOut("slow", function(){
+                    $(this).remove();
+                });
+                
             }
 
             if ( 
