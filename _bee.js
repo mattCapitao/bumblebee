@@ -4,7 +4,7 @@ var l = "+=0", t = "+=0", mv = 3;
 var sprite = 'bee.png', spriteLast = null;
 var newBird = 0, birdSpeed = 0, birdSpeedMin = 1, birdSpeedMax = 4, birdHeight = 0;
 var startnewBirdTreshold = 990, newBirdTreshold=startnewBirdTreshold, startBirdSpeedMultiplier = 1, birdSpeedMultiplier=startBirdSpeedMultiplier;
-var newFlower=0, flowerType=0, flowerX=0, flowerY=0, newFlowerThreshold=990, flowerExpire=0, flowerPollen=0, pollenMultiplier=3;
+var newFlower=0, flowerType=0, flowerX=0, flowerY=0, newFlowerThreshold=993, flowerExpire=0, flowerPollen=0, pollenMultiplier=2;
 var score = 0, startingLives=5, lives= startingLives, resetScore= false, resetLives=false, currentTimeSeconds=0;
 var avatarPollen=0, hiveHoney=0;
 var gameRunning = false, resetGame=false;
@@ -124,21 +124,22 @@ window.setInterval(function () {
         newFlower = rng(1,1000);
         
         if( newFlower > newFlowerThreshold){
-            flowerType = rng(1,4);
-            flowerX= rng(170,315);
+            flowerType = Math.trunc((rng(1,4001)/1000)+1);
+            console.log(flowerType);
+            flowerX= rng(1,149);
             flowerY= rng(20,750);
             flowerExpire=flowerType*5;
-            flowerPollen= (5-flowerType)*pollenMultiplier;
+            flowerPollen= (6-flowerType)*pollenMultiplier;
             var expireTime = new Date().getTime() / 1000;
             expireTime = (expireTime + flowerExpire);
-            $("#game").append('<div data-expire="'+expireTime+'" data-pollen="'+flowerPollen+'" class="flower f' + flowerType + '" style="top:'+ flowerX +'px;left:'+ flowerY + 'px;"></div>' );
-
+            //$("#game").append('<div data-expire="'+expireTime+'" data-pollen="'+flowerPollen+'" class="flower f' + flowerType + '" style="top:'+ flowerX +'px;left:'+ flowerY + 'px;"></div>' );
+            $('<div data-expire="'+expireTime+'" data-pollen="'+flowerPollen+'" class="flower f' + flowerType + '" style="display:none;bottom:'+ flowerX +'px;left:'+ flowerY + 'px;"></div>' ).appendTo(game).slideToggle(2000);
         }
 
         $(".flower").each(function (element) {
             currentTimeSeconds =  new Date().getTime() / 1000;
             if($(this).attr("data-expire") <=  currentTimeSeconds){
-                $(this).fadeOut("slow", function(){
+                $(this).slideToggle("slow", function(){
                     $(this).remove();
                 });
                 
@@ -151,12 +152,18 @@ window.setInterval(function () {
                 ($(this).offset().top + ($(this).height()-40)) > $("#avatar").offset().top 
 
             ){  
-                avatarPollen = ($("#avatar").attr('data-pollen')*1) + ($(this).attr('data-pollen')*1);
+                let currentAvatarPollen = $("#avatar").attr('data-pollen')*1;
+                let currentFlowerPollen = $(this).attr('data-pollen')*1;
+                console.log(currentAvatarPollen + "+" + currentFlowerPollen + "=" + (currentAvatarPollen + currentFlowerPollen));
+                avatarPollen = currentAvatarPollen + currentFlowerPollen;
                 $("#avatar").attr('data-pollen', avatarPollen);
                 points= ($(this).attr('data-pollen') *100);
                 console.log("Pollen Collcted +" + points + " Points!");
                 score = score + Math.trunc(points);
-                $(this).remove();
+                // Need to implement a check to see if flower has already given pollen before implmenting fade animation becasue it registers the hit multipe times during fadeOut
+               // $(this).fadeOut(19, function(){
+                    $(this).remove();
+                //});
             }
         });
 
