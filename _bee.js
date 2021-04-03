@@ -1,10 +1,10 @@
 
 var keyMap = { 37: false, 38: false, 39: false, 40: false }
-var l = "+=0", t = "+=0", mv = 3;
+var l = "+=0", t = "+=0", mv = 6;
 var sprite = 'bee.png', spriteLast = null;
-var newBird = 0, birdSpeed = 0, birdSpeedMin = 1, birdSpeedMax = 4, birdHeight = 0;
-var startnewBirdTreshold = 990, newBirdTreshold=startnewBirdTreshold, startBirdSpeedMultiplier = 1, birdSpeedMultiplier=startBirdSpeedMultiplier;
-var newFlower=0, flowerType=0, flowerX=0, flowerY=0, newFlowerThreshold=993, flowerExpire=0, flowerPollen=0, pollenMultiplier=2;
+var newBird = 0, birdSpeed = 0, birdSpeedMin = 3, birdSpeedMax = 5, birdHeight = 0;
+var startnewBirdTreshold = 990, newBirdTreshold=startnewBirdTreshold, startBirdSpeedMultiplier = 1.25, birdSpeedMultiplier=startBirdSpeedMultiplier;
+var newFlower=0, flowerType=0, flowerX=0, flowerY=0, newFlowerThreshold=985, flowerExpire=0, flowerPollen=0, pollenMultiplier=2;
 var score = 0, startingLives=5, lives= startingLives, resetScore= false, resetLives=false, currentTimeSeconds=0;
 var avatarPollen=0, hiveHoney=0;
 var gameRunning = false, resetGame=false;
@@ -71,6 +71,7 @@ function birdFood(){
 }
 
 function gameOver(){
+    gameRunning = false;
     console.log("Game Over")
     $("#game_over").show("slow");
     resetGame = true;
@@ -190,7 +191,7 @@ window.setInterval(function () {
                 points=(($(this).attr('data-speed') * birdSpeedMultiplier)*10);
                 console.log("Bird Dodged +" + points + " Points!");
                 score = score + Math.trunc(points);
-                birdSpeedMultiplier = birdSpeedMultiplier * 1.0025;
+                birdSpeedMultiplier = birdSpeedMultiplier * 1.005;
                 newBirdTreshold = newBirdTreshold -.04;
             }
 
@@ -217,9 +218,9 @@ window.setInterval(function () {
         $("#avatar").animate({
             left: l,
             top: t
-        }, 1);
+        }, 2);
     } else {
         $("#start").show();
     }
-}, 20);
+}, 40);
 
