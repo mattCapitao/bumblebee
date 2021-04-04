@@ -2,9 +2,9 @@
 var keyMap = { 37: false, 38: false, 39: false, 40: false }
 var l = "+=0", t = "+=0", mv = 6;
 var sprite = 'bee.png', spriteLast = null;
-var newBird = 0, birdSpeed = 0, birdSpeedMin = 3, birdSpeedMax = 5, birdHeight = 0;
+var newBird = 0, birdSpeed = 0, birdSpeedMin = 3, birdSpeedMax = 5, birdHeight = 0, birdType = 0, birdClass="";
 var startnewBirdTreshold = 990, newBirdTreshold=startnewBirdTreshold, startBirdSpeedMultiplier = 1.25, birdSpeedMultiplier=startBirdSpeedMultiplier;
-var newFlower=0, flowerType=0, flowerX=0, flowerY=0, newFlowerThreshold=985, flowerExpire=0, flowerPollen=0, pollenMultiplier=2;
+var newFlower=0, flowerType=0, flowerX=0, flowerY=0, newFlowerThreshold=991, flowerExpire=0, flowerPollen=0,lastFlowerY=0, pollenMultiplier=2;
 var score = 0, startingLives=5, lives= startingLives, resetScore= false, resetLives=false, currentTimeSeconds=0;
 var avatarPollen=0, hiveHoney=0;
 var gameRunning = false, resetGame=false;
@@ -14,7 +14,7 @@ $("#lives").html(startingLives);
 $("#pollen").html(avatarPollen);
 $("#honey").html(hiveHoney);
 
-$(document).on("click", "#start", function(){
+$(document).on("click", ".btn_run_game", function(){
     gameRunning = true;
     $(this).hide();
     $("#mission_complete").hide("fast");
@@ -75,7 +75,7 @@ function gameOver(){
     console.log("Game Over")
     $("#game_over").show("slow");
     resetGame = true;
-    $("#start").slideDown(1000);
+    $("#new_game").slideDown(1000);
 }
 
 function missionComplete(){
@@ -85,7 +85,7 @@ function missionComplete(){
     $(".final_score").html(score);
     $("#mission_complete").show("slow");
     resetGame = true;
-    $("#start").slideDown(1000);
+    $("#new_game").slideDown(1000);
 }
 
 window.setInterval(function () {
@@ -111,8 +111,8 @@ window.setInterval(function () {
             ){  
                avatarPollen = ($("#avatar").attr('data-pollen')*1)
 
-               if(avatarPollen >= 100 ){
-                    avatarPollen = avatarPollen - 100;
+               if(avatarPollen >= 1000 ){
+                    avatarPollen = avatarPollen - 1000;
                     console.log("Pollen Delivered to the Hive! + 2500 Points")
                     $("#avatar").attr('data-pollen',avatarPollen);
                     hiveHoney=($("#hive").attr('data-honey')*1) + 10
@@ -130,21 +130,26 @@ window.setInterval(function () {
             console.log(flowerType);
             flowerX= rng(1,149);
             flowerY= rng(20,750);
-            flowerExpire=flowerType*5;
+            let flowerDiff = lastFlowerY - flowerY;
+            if(flowerDiff > (-40) && flowerDiff < 0 ){flowerY -= 50;}
+            if(flowerDiff > 0 && flowerDiff < 40 ){flowerY += 50;}
+            console.log("l: " + lastFlowerY + " d: " + flowerDiff + " y: " + flowerY)
+            lastFlowerY = flowerY;
+            flowerExpire=flowerType*9;
             flowerPollen= (6-flowerType)*pollenMultiplier;
             var expireTime = new Date().getTime() / 1000;
             expireTime = (expireTime + flowerExpire);
             //$("#game").append('<div data-expire="'+expireTime+'" data-pollen="'+flowerPollen+'" class="flower f' + flowerType + '" style="top:'+ flowerX +'px;left:'+ flowerY + 'px;"></div>' );
-            $('<div data-expire="'+expireTime+'" data-pollen="'+flowerPollen+'" class="flower f' + flowerType + '" style="display:none;bottom:'+ flowerX +'px;left:'+ flowerY + 'px;"></div>' ).appendTo(game).slideToggle(2000);
+            $('<div data-expire="'+expireTime+'" data-pollen="'+flowerPollen+'" class="flower f' + flowerType + '" style="display:none;bottom:'+ flowerX +'px;left:'+ flowerY + 'px;"></div>' ).appendTo(game).slideToggle(3000);
         }
 
         $(".flower").each(function (element) {
             currentTimeSeconds =  new Date().getTime() / 1000;
+
             if($(this).attr("data-expire") <=  currentTimeSeconds){
                 $(this).slideToggle("slow", function(){
                     $(this).remove();
                 });
-                
             }
 
             if ( 
@@ -156,16 +161,27 @@ window.setInterval(function () {
             ){  
                 let currentAvatarPollen = $("#avatar").attr('data-pollen')*1;
                 let currentFlowerPollen = $(this).attr('data-pollen')*1;
+
+                let pollenTop = $(this).offset().top - 20, pollenLeft = $(this).offset().left + 20;
+                $('<div class="pollen" style="top:'+pollenTop+'; left:'+pollenLeft+';">'+currentFlowerPollen+'</div>').appendTo(game).animate({
+                        opacity: 0,
+                        top: "-=75",
+                        left: "+=50"
+
+                }, 50, function(){
+                    $(this).remove()
+                });
+
                 console.log(currentAvatarPollen + "+" + currentFlowerPollen + "=" + (currentAvatarPollen + currentFlowerPollen));
                 avatarPollen = currentAvatarPollen + currentFlowerPollen;
                 $("#avatar").attr('data-pollen', avatarPollen);
-                points= ($(this).attr('data-pollen') *100);
+                points= ($(this).attr('data-pollen') *10);
                 console.log("Pollen Collcted +" + points + " Points!");
                 score = score + Math.trunc(points);
                 // Need to implement a check to see if flower has already given pollen before implmenting fade animation becasue it registers the hit multipe times during fadeOut
-               // $(this).fadeOut(19, function(){
+               $(this).fadeOut(2000, function(){
                     $(this).remove();
-                //});
+                });
             }
         });
 
@@ -174,8 +190,15 @@ window.setInterval(function () {
         if (newBird > newBirdTreshold) {
             birdSpeed = (rng(birdSpeedMin, birdSpeedMax) * birdSpeedMultiplier);
             //birdSpeed = 1;
+
             birdHeight = rng(20, 70);
-            $("#game").append('<div class="bird" style="top:' + birdHeight + '%;" data-speed="' + birdSpeed + '"></div>');
+
+            let birdType = rng(1,6);
+            if(birdType < 5 ){birdClass = "b1";
+            }else{birdClass = "b2"; birdSpeed *= 1.5; }
+
+            $(this).addClass(birdClass);
+            $("#game").append('<div class="bird '+birdClass+'" style="top:' + birdHeight + '%;" data-speed="' + birdSpeed + '"></div>');
             birdSpeed = 0;
             //newBirdTreshold++;
         }
@@ -221,7 +244,12 @@ window.setInterval(function () {
             top: t
         }, 2);
     } else {
-        $("#start").show();
+        if(lives < 1 || lives == 5){
+            $("#new_game").fadeIn("slow");
+        }else{
+           $("#start").fadeIn("slow") ;
+        }
+        ;
     }
 }, 40);
 
