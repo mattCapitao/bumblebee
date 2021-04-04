@@ -71,7 +71,7 @@ function birdFood(){
 }
 
 function gameOver(){
-    gameRunning = false;
+    
     console.log("Game Over")
     $("#game_over").show("slow");
     resetGame = true;
@@ -79,6 +79,7 @@ function gameOver(){
 }
 
 function missionComplete(){
+    gameRunning = false;
     console.log("Mission Complete You Win!")
     score = score + (lives * 100000);
     $(".final_score").html(score);
