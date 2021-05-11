@@ -1,36 +1,24 @@
-
+<!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="_bee.css">
+    </head>
 
-<head>
-    <link rel="stylesheet" type="text/css" href="_bee.css">
-</head>
+    <body>
+        <div id="game">
+            <div id ="gamestats"><b>Level: </b><span class="level"></span> | <b>Lives: </b><span id="lives"></span> | <b>Pollen:</b> <span id="pollen"></span>  | <b>Honey:</b> <span id="honey"></span> | <b>Score:</b> <span id="score"></span></div>
+            <button id="start" class="btn_run_game" >Start</button>
+            <div id="level_complete" class="banner">Level <span class="level"></span> Complete! <br /> Bonus Points: <span class="bonus_score"></span></div>
+            <div id="game_over"  class="banner">GAME OVER! <br /> Final Score: <span class="final_score"></span></div>
+            <div id="mission_complete"  class="banner">Mission Complete - YOU WIN! <br /> Final Score: <span class="final_score"></span></div>
+            <div id="sun_box"><img id="sun" src="giphy.gif" /></div>
+            <div id="avatar" data-pollen="0"></div>
+            <div id="hive" data-honey="0"></div>
+            <div id="sky"></div>
+            <div id="ground"></div>
+        </div>
+    </body>
 
-
-<body>
-
-<div id="game">
-    <div id ="gamestats"><b>Lives: </b><span id="lives"></span> | <b>Pollen:</b> <span id="pollen"></span>  | <b>Honey:</b> <span id="honey"></span> | <b>Score:</b> <span id="score"></span></div>
-    <button id="start" class="btn_run_game" >Start</button>
-    <buton id="new_game" class="btn_run_game">New Game</buton>
-    <div id="game_over">GAME OVER! <br /> Final Score: <span class="final_score"></span></div>
-    <div id="mission_complete">Mission Complete - YOU WIN! <br /> Final Score: <span class="final_score"></span></div>
-    <div id="sun_box"><img id="sun" src="giphy.gif" /></div>
-    <div id="avatar" data-pollen="0"></div>
-    <div id="hive" data-honey="0"></div>
-    <!--
-    <div class="flower f1"></div>
-    <div class="flower f2"></div>
-    <div class="flower f3"></div>
-    <div class="flower f4"></div>
-    -->
-    <div id="sky"></div>
-    <div id="ground"></div>
-
-</div>
-
-</body>
-
-<script src="jquery-3.2.1.min.js"></script>
-<script src="_bee.js"></script>
-
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="_bee.js"></script>
 </html>
