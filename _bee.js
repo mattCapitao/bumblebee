@@ -1,13 +1,13 @@
 
 
-var keyMap = { 37: false, 38: false, 39: false, 40: false } ;
+let keyMap = { 37: false, 38: false, 39: false, 40: false } ;
 
 
-var score = 0, startingLives=5, lives=startingLives, resetScore=false, resetLives=false, currentTimeSeconds=0, sprite = 'bee.png',
+let score = 0, startingLives=5, lives=startingLives, resetScore=false, resetLives=false, currentTimeSeconds=0, sprite = 'bee.png',
     l = "+=0", t = "+=0",  mv = 6, spriteLast = null, avatarPollen=0, currentAvatarPollen = 0, currentFlowerPollen = 0,
     newBird = 0, birdSpeed = 0, birdSpeedMin = 3, birdSpeedMax = 5, birdHeight = 0, birdType = 0, birdClass="";
 
-var    startnewBirdTreshold = 990, newBirdTreshold=startnewBirdTreshold, startBirdSpeedMultiplier = 1.25, birdSpeedMultiplier=startBirdSpeedMultiplier,
+let startnewBirdTreshold = 990, newBirdTreshold=startnewBirdTreshold, startBirdSpeedMultiplier = 1.25, birdSpeedMultiplier=startBirdSpeedMultiplier,
     newFlower=0, flowerType=0, flowerX=0, flowerY=0, newFlowerThreshold=991, flowerExpire=0, flowerPollen=0, lastFlowerY=0, pollenMultiplier=2, flowerDiff = 0, pollenTop = 0,
     hiveHoney=0, honeyGoal=5, pollenToHoney= .005, gameRunning = false, resetGame=false, newLevel=false, level=1, pollenBonus=0, honeyBonus=0, livesBonus=0;
 
