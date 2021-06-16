@@ -3,7 +3,7 @@
 let keyMap = { 37: false, 38: false, 39: false, 40: false } ;
 
 
-let score = 0, startingLives=5, lives=startingLives, resetScore=false, resetLives=false, currentTimeSeconds=0, sprite = 'bee.png',
+let score = 0, startingLives=5, lives=startingLives, resetScore=false, resetLives=false, currentTimeSeconds=0, sprite = 'bee_left.png',
     l = "+=0", t = "+=0",  mv = 6, spriteLast = null, avatarPollen=0, currentAvatarPollen = 0, currentFlowerPollen = 0,
     newBird = 0, birdSpeed = 0, birdSpeedMin = 3, birdSpeedMax = 5, birdHeight = 0, birdType = 0, birdClass="";
 
@@ -40,6 +40,7 @@ $(document).on('keydown', function (e) {
 });
 
 function setBeeSprite(l, t) {
+    sprite = "bee_left.png";
     if (spriteLast != null) { sprite = spriteLast; }
     if (l == '+=' + mv && t == '-=' + mv) { sprite = "bee_up_right.png" }
     if (l == '+=' + mv && t == '+=0') { sprite = "bee_right.png" }
@@ -48,7 +49,7 @@ function setBeeSprite(l, t) {
     if (l == '-=' + mv && t == '+=0') {sprite = "bee_left.png"}
     if (l == '-=' + mv && t == '+=' + mv) {sprite = "bee_down_left.png"}
     spriteLast = sprite;
-    $("#avatar").css('background-image', 'url(' + sprite + ')');
+    $("#avatar").css('background-image', 'url(src/img/' + sprite + ')');
 }
 
 function rng(min, max) {
@@ -61,7 +62,7 @@ function birdFood(){
     gameRunning = false;
     $(".bird").each(function () {$(this).remove();});
     sprite = "bee_left.png";
-    $("#avatar").css('background-image', 'url(' + sprite + ')').animate(
+    $("#avatar").css('background-image', 'url(img/' + sprite + ')').animate(
         {
         left : '830px',
         top :  '240px'
@@ -84,12 +85,17 @@ function gameOver(){
 function levelComplete(){
     gameRunning=false;
     newLevel=true;
-    console.log("level complete called");
+    $(".completed_level").html(level);
+    //console.log("level complete called");
     pollenBonus = avatarPollen*(level*1000);
     honeyBonus = hiveHoney*(level*5000);
     livesBonus = lives * (level*10000);
-    score += (pollenBonus + honeyBonus + livesBonus);
+    let bonusPoints = (pollenBonus + honeyBonus + livesBonus);
+    $(".bonus_points").html(bonusPoints);
+    score += bonusPoints;
+    
     $("#level_complete").show("slow");
+    
     level++;
     $(".level").html(level);
     $("#start").html('Start Level '+level);
@@ -239,7 +245,7 @@ window.setInterval(function () {
             //newBirdTreshold++;
         }
 
-        $(".bird").each(function () {
+        $(".bird").each( function() {
 
             $(this).animate({
                 left: '+=' + $(this).attr('data-speed'),

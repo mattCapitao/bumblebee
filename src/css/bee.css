@@ -60,7 +60,7 @@ body {
     padding: 0;
     margin: 0;
     border: 0;
-    background-image: url("hive.png");
+    background-image: url("../img/hive.png");
     background-size: contain;
     position: absolute;
     right: 10px;
@@ -87,22 +87,22 @@ body {
 }
 
 .f1 {
-    background-image: url("flower1.png");
+    background-image: url("../img/flower1.png");
   
 }
 
 .f2 {
-    background-image: url("flower2.png");
+    background-image: url("../img/flower2.png");
  
 }
 
 .f3 {
-    background-image: url("flower3.png");
+    background-image: url("../img/flower3.png");
 
 }
 
 .f4 {
-    background-image: url("flower4.png");
+    background-image: url("../img/flower4.png");
 
 }
 .banner{
@@ -175,7 +175,7 @@ body {
     padding: 0;
     margin: 0;
     border: 0;
-    background-image: url("bee_left.png");
+    background-image: url("../img/bee_left.png");
     background-size: contain;
     position: absolute;
     z-index: 9990;
@@ -199,5 +199,5 @@ body {
     /*border: 2px solid red;*/
 }
 
-.b1{background-image: url("bird.webp");}
-.b2{background-image: url("bird2.gif");}
+.b1{background-image: url("../img/bird.webp");}
+.b2{background-image: url("../img/bird2.gif");}
