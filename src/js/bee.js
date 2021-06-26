@@ -1,9 +1,22 @@
 const Bee = {
   elem: "#avatar",
-  sprite: "bee_left.png",
-  spriteLast: null,
+  
+  
+  movement: {
+    l: "+=0",
+    t: "+=0",
+    mv: 6,
+  },
+
+  init: () => {
+    Bee.sprite = "bee_left.png";
+    Bee.spriteLast = null;
+    Bee.pollen = 0;
+    $("#pollen").html(Bee.pollen);
+  },
+
   setSprite: (l, t, mv) => {
-    Bee.sprite = "bee_left.png"
+    Bee.sprite = "bee_left.png";
     if (Bee.spriteLast != null) {
       Bee.sprite = Bee.spriteLast;
     }
