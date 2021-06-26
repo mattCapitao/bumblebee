@@ -1,7 +1,6 @@
 import Game from "./game.js";
-import Bee from "./bee.js";
 import Hive from "./hive.js";
-
+import Bee from "./bee.js";
 const Level = {
   current: 1,
   pollenToHoney: 0.005,
@@ -10,8 +9,8 @@ const Level = {
 
   init: () => {
     Level.seconds = 0;
-    Bee.pollen = 0;
-    Hive.honey = 0;
+    Bee.init();
+    Hive.init();
     $(".level").html(Level.current);
     $("#start").html("Start Level " + Level.current);
 
@@ -44,7 +43,7 @@ const Level = {
       Bee.pollen * (Level.current * 1000) +
       Hive.honey * (Level.current * 5000) +
       Game.lives * (Level.current * 10000);
-			
+
 		Bee.pollen = 0;
 		Hive.honey = 0;
     Game.score += bonusPoints;

@@ -1,17 +1,15 @@
-import Bee from "./bee.js";
-import Hive from "./hive.js";
+
 import Level from "./level.js";
+import Hive from "./hive.js";
+import Bee from "./bee.js";
 
 const Game = {
   running: false,
-  reset: false,
-  startingLives: 5,
-  score: 0,
   keyMap: { 37: false, 38: false, 39: false, 40: false },
 
   init: () => {
     Level.current = 1;
-    Game.lives = Game.startingLives;
+    Game.lives = 5;
     Game.score = 0;
     Game.reset = false;
     $("#score").html(Game.score);

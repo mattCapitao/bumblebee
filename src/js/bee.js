@@ -1,7 +1,6 @@
 const Bee = {
   elem: "#avatar",
   
-  
   movement: {
     l: "+=0",
     t: "+=0",

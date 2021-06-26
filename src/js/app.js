@@ -18,7 +18,6 @@ let //Bee
   //Flower
   currentTimeSeconds = 0,
   currentFlowerPollen = 0,
-  newFlower = 0,
   flowerType = 0,
   flowerX = 0,
   flowerY = 0,
@@ -34,42 +33,6 @@ let //Bee
 
 Game.init();
 
-$(document).on("click", ".btn_run_game", function () {
-  Game.start();
-  $(this).hide();
-  $(".banner").hide("fast");
-});
-
-$(document)
-  .on("keydown", function (e) {
-    if (e.which in Game.keyMap) {
-      Game.keyMap[e.which] = true;
-      if (Game.keyMap[38]) {
-        t = "-=" + mv;
-      }
-      if (Game.keyMap[40]) {
-        t = "+=" + mv;
-      }
-      if (Game.keyMap[37]) {
-        l = "-=" + mv;
-      }
-      if (Game.keyMap[39]) {
-        l = "+=" + mv;
-      }
-    }
-    Bee.setSprite(l, t, mv);
-  })
-  .keyup(function (e) {
-    if (e.which in Game.keyMap) {
-      Game.keyMap[e.which] = false;
-      if (e.which == 37 || e.which == 39) {
-        l = "+=0";
-      }
-      if (e.which == 38 || e.which == 40) {
-        t = "+=0";
-      }
-    }
-  });
 
 function rng(min, max) {
   let random_number = Math.random() * (max - min) + min;
@@ -111,14 +74,9 @@ window.setInterval(function () {
           $("#avatar").offset().top + $("#avatar").height() &&
         $(this).offset().top + ($(this).height() - 40) >
           $("#avatar").offset().top
-      ) {
-
+      	) {
         if (Bee.pollen >= 1000) {
-          Bee.pollen -= 1000;
-          Hive.honey =
-            $("#hive").attr("data-honey") * 1 + 1000 * Level.pollenToHoney;
-          $("#hive").attr("data-honey", Hive.honey);
-          Game.score += 2500;
+					Hive.convertPollen();
         }
       }
       if (Hive.honey >= Level.honeyGoal) {
@@ -126,11 +84,8 @@ window.setInterval(function () {
       }
     });
 
-    newFlower = rng(1, 1000);
-
-    if (newFlower > newFlowerThreshold) {
+    if ( rng(1, 1000) > newFlowerThreshold) {
       flowerType = Math.trunc(rng(1, 4001) / 1000 + 1);
-      //console.log(flowerType);
       flowerX = rng(1, 149);
       flowerY = rng(20, 750);
       flowerDiff = lastFlowerY - flowerY;
@@ -140,7 +95,6 @@ window.setInterval(function () {
       if (flowerDiff > 0 && flowerDiff < 40) {
         flowerY += 50;
       }
-      //console.log("l: " + lastFlowerY + " d: " + flowerDiff + " y: " + flowerY)
       lastFlowerY = flowerY;
       flowerExpire = flowerType * 9;
       flowerPollen = (6 - flowerType) * pollenMultiplier;
@@ -219,13 +173,10 @@ window.setInterval(function () {
     });
 
     newBird = rng(1, 1000);
-    //console.log(newBird, Level.birdGenThreshold);
+
     if (newBird > Level.birdGenThreshold) {
       birdSpeed = rng(birdSpeedMin, birdSpeedMax) * Level.birdSpeedMultiplier;
-      //birdSpeed = 1;
-
       birdHeight = rng(20, 70);
-
       birdType = rng(1, 6);
 
       if (birdType < 5) {
@@ -304,3 +255,40 @@ window.setInterval(function () {
     $("#start").slideDown(2000);
   }
 }, 40);
+
+$(document).on("click", ".btn_run_game", function () {
+  Game.start();
+  $(this).hide();
+  $(".banner").hide("fast");
+});
+
+$(document)
+  .on("keydown", function (e) {
+    if (e.which in Game.keyMap) {
+      Game.keyMap[e.which] = true;
+      if (Game.keyMap[38]) {
+        t = "-=" + mv;
+      }
+      if (Game.keyMap[40]) {
+        t = "+=" + mv;
+      }
+      if (Game.keyMap[37]) {
+        l = "-=" + mv;
+      }
+      if (Game.keyMap[39]) {
+        l = "+=" + mv;
+      }
+    }
+    Bee.setSprite(l, t, mv);
+  })
+  .keyup(function (e) {
+    if (e.which in Game.keyMap) {
+      Game.keyMap[e.which] = false;
+      if (e.which == 37 || e.which == 39) {
+        l = "+=0";
+      }
+      if (e.which == 38 || e.which == 40) {
+        t = "+=0";
+      }
+    }
+  });
