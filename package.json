@@ -1,0 +1,25 @@
+{
+  "name": "bee",
+  "version": "1.0.0",
+  "description": "Bee Game",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattCapitao/bumblebee.git"
+  },
+  "author": "Matt Capitao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mattCapitao/bumblebee/issues"
+  },
+  "homepage": "https://github.com/mattCapitao/bumblebee#readme",
+  "devDependencies": {
+    "eslint": "^7.29.0"
+  },
+  "dependencies": {
+    "mocha": "^9.0.1"
+  }
+}
