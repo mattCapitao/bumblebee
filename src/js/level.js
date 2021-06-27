@@ -1,11 +1,12 @@
 import Game from "./game.js";
+import Levels from "./levels.js";
 import Hive from "./hive.js";
 import Bee from "./bee.js";
+
 const Level = {
   current: 1,
   pollenToHoney: 0.005,
-
-  levels: [{}, {}, {}],
+	max: Object.keys(Levels).length,
 
   init: () => {
     Level.seconds = 0;
@@ -13,26 +14,7 @@ const Level = {
     Hive.init();
     $(".level").html(Level.current);
     $("#start").html("Start Level " + Level.current);
-
-    switch (Level.current) {
-      case 2:
-        Level.birdSpeedMultiplier += 0.25;
-        Level.birdGenThreshold -= 2;
-        Level.honeyGoal = 10;
-        break;
-
-      case 3:
-        Level.birdSpeedMultiplier += 0.25;
-        Level.birdGenThreshold -= 2;
-        Level.honeyGoal = 20;
-        break;
-
-      default:
-        Level.birdGenThreshold = 990;
-        Level.birdSpeedMultiplier = 1.25;
-        Level.honeyGoal = 5;
-        break;
-    }
+		Object.assign(Level, (Levels[ "l" + Level.current ]));
   },
 
   complete: () => {
@@ -53,8 +35,8 @@ const Level = {
     $("#level_complete").show("slow");
 
     Level.current++;
-
-    if (Level.current > Level.levels.length) {
+		
+    if (Level.current > Level.max) {
       Game.complete();
     } else {
       Level.init();

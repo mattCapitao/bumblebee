@@ -3,9 +3,9 @@ import Level from "./level.js";
 import Hive from "./hive.js";
 import Bee from "./bee.js";
 
+
 let //Bee
   { l, t, mv } = Bee.movement,
-
   //Bird
   newBird = 0,
   birdSpeed = 0,
@@ -14,7 +14,6 @@ let //Bee
   birdHeight = 0,
   birdType = 0,
   birdClass = "",
-
   //Flower
   currentTimeSeconds = 0,
   currentFlowerPollen = 0,
@@ -32,7 +31,6 @@ let //Bee
   pollenLeft = 0;
 
 Game.init();
-
 
 function rng(min, max) {
   let random_number = Math.random() * (max - min) + min;
@@ -54,9 +52,10 @@ window.setInterval(function () {
           $("#avatar").offset().top + $("#avatar").height() &&
         $(this).offset().top + ($(this).height() - 40) >
           $("#avatar").offset().top
-      	) {
-        if (Bee.pollen >= 1000) {
-					Hive.convertPollen();
+      ) {
+				let convertQuantity = (1 / Level.pollenToHoney);
+        if (Bee.pollen/convertQuantity >= 1) {
+          Hive.convertPollen(convertQuantity);
         }
       }
       if (Hive.honey >= Level.honeyGoal) {
@@ -64,7 +63,7 @@ window.setInterval(function () {
       }
     });
 
-    if ( rng(1, 1000) > newFlowerThreshold) {
+    if (rng(1, 1000) > newFlowerThreshold) {
       flowerType = Math.trunc(rng(1, 4001) / 1000 + 1);
       flowerX = rng(1, 149);
       flowerY = rng(20, 750);
@@ -128,18 +127,18 @@ window.setInterval(function () {
             currentFlowerPollen +
             "</div>"
         )
-        .appendTo(game)
-        .animate(
+          .appendTo(game)
+          .animate(
             {
               opacity: 0,
               top: "-=75",
               left: "+=50",
             },
             50,
-             () => {
+            function () {
               $(this).remove();
             }
-        );
+          );
 
         Bee.pollen += currentFlowerPollen;
         let points = $(this).attr("data-pollen") * 10;
@@ -228,7 +227,6 @@ window.setInterval(function () {
       2
     );
   } else {
-    // game not running
     $("#start").slideDown(2000);
   }
 }, 40);
@@ -237,7 +235,6 @@ $(document).on("click", ".btn_run_game", function () {
   Game.start();
   $(this).hide();
   $(".banner").hide("fast");
-
 });
 
 $(document)

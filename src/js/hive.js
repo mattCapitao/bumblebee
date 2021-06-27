@@ -6,13 +6,15 @@ const Hive = {
   elem: "#hive",
 
   init: () => {
-      Hive.honey = 0;
+    Hive.honey = 0;
     $("#honey").html(Hive.honey);
   },
 
-  convertPollen: () => {
-    Bee.pollen -= 1000;
-    Hive.honey += (1000 * Level.pollenToHoney);
+  convertPollen: (convertQuantity) => {
+      console.log(convertQuantity);
+    Bee.pollen -= convertQuantity;
+    //Hive.honey += (1000 * Level.pollenToHoney);
+    Hive.honey++;
     Game.score += 2500; 
   }
 };
