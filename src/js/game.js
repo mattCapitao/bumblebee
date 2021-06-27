@@ -21,6 +21,7 @@ const Game = {
 
   start: () => {
     Game.running = true;
+    if(Bee.dead){Bee.init();}
   },
 
   stop: () => {

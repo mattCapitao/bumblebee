@@ -1,3 +1,6 @@
+import Game from "./game.js";
+
+
 const Bee = {
   elem: "#avatar",
   
@@ -8,10 +11,37 @@ const Bee = {
   },
 
   init: () => {
+    Bee.dead = false;
     Bee.sprite = "bee_left.png";
     Bee.spriteLast = null;
+    $("#avatar")
+    .css("background-image", "url(src/img/" + Bee.sprite + ")")
+    .animate({
+        left: "830px",
+        top: "240px",
+        rotation:0
+    });
+    
     Bee.pollen = 0;
     $("#pollen").html(Bee.pollen);
+  },
+
+  die: () =>{
+    Bee.dead = true;
+    $("#avatar")
+    .css("background-image", "url(src/img/bee_left.png)")
+    .animate({
+        top: "340px",
+        rotation: 180
+    }, {duration:2500});
+    Game.lives--;
+    $("#lives").html(Game.lives);
+    if (Game.lives < 1) {
+        Game.over();
+    }else{
+        Game.stop();
+	    Game.clear();
+    }
   },
 
   setSprite: (l, t, mv) => {

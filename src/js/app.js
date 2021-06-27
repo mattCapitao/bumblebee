@@ -1,7 +1,7 @@
 import Game from "./game.js";
-import Bee from "./bee.js";
 import Level from "./level.js";
 import Hive from "./hive.js";
+import Bee from "./bee.js";
 
 let //Bee
   { l, t, mv } = Bee.movement,
@@ -39,33 +39,13 @@ function rng(min, max) {
   return Math.floor(random_number);
 }
 
-function birdFood() {
-  console.log("Bird Food!");
-  Game.stop();
-	Game.clear();
-  Bee.init();
-  $("#avatar")
-    .css("background-image", "url(src/img/" + Bee.sprite + ")")
-    .animate({
-      left: "830px",
-      top: "240px",
-    });
-  Game.lives--;
-  $("#lives").html(Game.lives);
-  if (Game.lives < 1) {
-    Game.over();
-  }
-}
-
 window.setInterval(function () {
   if (Game.running) {
     if (Game.reset) {
       Game.init();
     }
 
-    //if (Level.new) {Level.init();}
-
-    $("#hive").each(function (element) {
+    $("#hive").each(function () {
       if (
         $(this).offset().left <
           $("#avatar").offset().left + $("#avatar").width() &&
@@ -148,23 +128,21 @@ window.setInterval(function () {
             currentFlowerPollen +
             "</div>"
         )
-          .appendTo(game)
-          .animate(
+        .appendTo(game)
+        .animate(
             {
               opacity: 0,
               top: "-=75",
               left: "+=50",
             },
             50,
-            function () {
+             () => {
               $(this).remove();
             }
-          );
+        );
 
-        //console.log(Bee.currentPollen + "+" + currentFlowerPollen + "=" + (Bee.currentPollen + currentFlowerPollen));
         Bee.pollen += currentFlowerPollen;
         let points = $(this).attr("data-pollen") * 10;
-        //console.log("Pollen Collcted +" + points + " Points!");
         Game.score += Math.trunc(points);
         $(this).fadeOut(2000, function () {
           $(this).remove();
@@ -212,7 +190,6 @@ window.setInterval(function () {
         $(this).remove();
         let points =
           $(this).attr("data-speed") * Level.birdSpeedMultiplier * 100;
-        //console.log("Bird Dodged +" + points + " Points!");
         Game.score += Math.trunc(points);
         Level.birdSpeedMultiplier *= 1.005;
         Level.birdGenThreshold -= 0.04;
@@ -232,7 +209,7 @@ window.setInterval(function () {
         $(this).offset().top + ($(this).height() - 90) <
           $("#avatar").offset().top
       ) {
-        birdFood();
+        Bee.die();
       }
     });
 
@@ -260,6 +237,7 @@ $(document).on("click", ".btn_run_game", function () {
   Game.start();
   $(this).hide();
   $(".banner").hide("fast");
+
 });
 
 $(document)
