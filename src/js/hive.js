@@ -11,9 +11,7 @@ const Hive = {
   },
 
   convertPollen: (convertQuantity) => {
-      console.log(convertQuantity);
     Bee.pollen -= convertQuantity;
-    //Hive.honey += (1000 * Level.pollenToHoney);
     Hive.honey++;
     Game.score += 2500; 
   }

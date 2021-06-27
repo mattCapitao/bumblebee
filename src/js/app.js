@@ -227,7 +227,10 @@ window.setInterval(function () {
       2
     );
   } else {
-    $("#start").slideDown(2000);
+		if(!Game.paused){
+			$("#start").slideDown(2000);
+		}
+    
   }
 }, 40);
 
@@ -235,6 +238,24 @@ $(document).on("click", ".btn_run_game", function () {
   Game.start();
   $(this).hide();
   $(".banner").hide("fast");
+});
+
+$(document).on("click", ".pause", function(){
+	if(Game.running && !Game.paused){
+		Game.pause();
+		$(this).removeClass("pause");
+		$(this).addClass("play")
+	}
+	
+});
+
+$(document).on("click", ".play", function(){
+	if(!Game.running && Game.paused){
+		Game.start();
+		$(this).removeClass("play");
+		$(this).addClass("pause")
+	}
+
 });
 
 $(document)
