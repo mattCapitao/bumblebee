@@ -168,6 +168,23 @@ body {
     display:none;
 }
 
+#controls{
+    height:32px;
+    width:32px;
+    background-size: contain;
+    position: absolute;
+    z-index: 9999;
+    right:50%;
+    bottom:10px;
+}
+
+.pause{
+    background-image: url("../img/pause.png");
+}
+
+.play{
+    background-image: url("../img/play.png");
+}
 
 #avatar {
     height: 40px;

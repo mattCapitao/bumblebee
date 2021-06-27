@@ -5,6 +5,7 @@ import Bee from "./bee.js";
 
 const Game = {
   running: false,
+  paused: false,
   keyMap: { 37: false, 38: false, 39: false, 40: false },
 
   init: () => {
@@ -21,7 +22,13 @@ const Game = {
 
   start: () => {
     Game.running = true;
+    Game.paused = false;
     if(Bee.dead){Bee.init();}
+  },
+
+  pause: () => {
+      Game.paused = true;
+      Game.stop();
   },
 
   stop: () => {
