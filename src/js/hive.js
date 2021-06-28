@@ -13,8 +13,8 @@ const Hive = {
   convertPollen: (convertQuantity) => {
     Bee.pollen -= convertQuantity;
     Hive.honey++;
-    Game.score += 2500; 
-  }
+    Game.score += 2500;
+  },
 };
 
 export default Hive;

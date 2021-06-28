@@ -6,7 +6,7 @@ import Bee from "./bee.js";
 const Level = {
   current: 1,
   pollenToHoney: 0.005,
-	max: Object.keys(Levels).length,
+  max: Object.keys(Levels).length,
 
   init: () => {
     Level.seconds = 0;
@@ -14,20 +14,20 @@ const Level = {
     Hive.init();
     $(".level").html(Level.current);
     $("#start").html("Start Level " + Level.current);
-		Object.assign(Level, (Levels[ "l" + Level.current ]));
+    Object.assign(Level, Levels["l" + Level.current]);
   },
 
   complete: () => {
     Game.stop();
     Game.clear();
-		
+
     let bonusPoints =
       Bee.pollen * (Level.current * 1000) +
       Hive.honey * (Level.current * 5000) +
       Game.lives * (Level.current * 10000);
 
-		Bee.pollen = 0;
-		Hive.honey = 0;
+    Bee.pollen = 0;
+    Hive.honey = 0;
     Game.score += bonusPoints;
 
     $(".completed_level").html(Level.current);
@@ -35,7 +35,7 @@ const Level = {
     $("#level_complete").show("slow");
 
     Level.current++;
-		
+
     if (Level.current > Level.max) {
       Game.complete();
     } else {

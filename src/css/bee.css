@@ -1,233 +1,279 @@
 body {
-    background-color: black;
+  background-color: black;
 }
 
 #game {
-    height: 400px;
-    width: 900px;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    background-color: azure;
-    position: relative;
-    margin: auto;
-    overflow: hidden;
+  height: 90vh;
+  width: 98vw;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-color: azure;
+  position: relative;
+  margin: auto;
+  overflow: hidden;
 }
 
 #github {
-    height: 50px;
-    width: 900px;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    text-align:center;
-    background-color: azure;
-    position: relative;
-    margin: auto;
-    overflow: hidden;
+  height: 4vh;
+  width: 98vw;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  text-align: center;
+  background-color: azure;
+  position: relative;
+  margin: auto;
+  overflow: hidden;
 }
 
 #sky {
-    height: 250px;
-    width: 900px;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    background-color: skyblue;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2000;
+  height: 55vh;
+  width: 98vw;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-color: skyblue;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2000;
 }
 
-#sun_box{
-    height:150px;
-    width:150px;
-    position: absolute;
-    top: -75px;
-    left: -75px;
-    z-index: 2500;
+#sun_box {
+  height: 30vh;
+  width: 30vh;
+  position: absolute;
+  top: -13vh;
+  left: -13vh;
+  z-index: 2500;
 }
-#sun{
-    height:150px;
-    width: 150px;
-    position:relative;
-
+#sun {
+  height: 30vh;
+  width: 30vh;
+  position: relative;
 }
 #ground {
-    height: 150px;
-    width: 900px;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    background-color: green;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 3000;
+  height: 35vh;
+  width: 98vw;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-color: green;
+  position: absolute;
+  top: 55vh;
+  left: 0;
+  z-index: 3000;
+}
+
+#tree {
+  height: 60vh;
+  width: 46vh;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-image: url("../img/tree1.png");
+  background-size: contain;
+  position: absolute;
+  right: -5vw;
+  top: 20vh;
+  z-index: 3900;
 }
 
 #hive {
-    height: 100px;
-    width: 100px;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    background-image: url("../img/hive.png");
-    background-size: contain;
-    position: absolute;
-    right: 10px;
-    top: 200px;
-    z-index: 4000;
+  height: 8vh;
+  width: 8vh;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-image: url("../img/hive.png");
+  background-size: contain;
+  position: absolute;
+  right: 1vw;
+  top: 54.5vh;
+  z-index: 4000;
+  border: 2px solid red;
 }
 
 .flower {
-    padding: 0;
-    margin: 0;
-    border: 0;
-    height: 85px;
-    width: 40px;
-    background-size: contain;
-    background-repeat:no-repeat;
-    position: absolute;
-    z-index: 9900;
-   /*border: 2px solid red;*/
+  padding: 0;
+  margin: 0;
+  border: 0;
+  height: 9vh;
+  width: 4vh;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  z-index: 9900;
+  /*border: 2px solid red;*/
 }
-.pollen{ 
-    
-    position:absolute;
-    z-index: 9999;
+.pollen {
+  position: absolute;
+  z-index: 9999;
 }
 
 .f1 {
-    background-image: url("../img/flower1.png");
-  
+  background-image: url("../img/flower1.png");
 }
 
 .f2 {
-    background-image: url("../img/flower2.png");
- 
+  background-image: url("../img/flower2.png");
 }
 
 .f3 {
-    background-image: url("../img/flower3.png");
-
+  background-image: url("../img/flower3.png");
 }
 
 .f4 {
-    background-image: url("../img/flower4.png");
-
+  background-image: url("../img/flower4.png");
 }
-.banner{
-    display:none;
-    width:100%;
-    top:35px;
-    left:0;
-    background-size: contain;
-    position: absolute;
-    z-index: 9999;
-    text-align: center;
-    font-size: 3em;
-    font-weight: bolder;
+.banner {
+  display: none;
+  width: 100%;
+  top: 20vh;
+  left: 0;
+  background-size: contain;
+  position: absolute;
+  z-index: 9999;
+  text-align: center;
+  font-size: 3em;
+  font-weight: bolder;
 }
 
 #game_over {
-  
-    color:whitesmoke;
-    background-color: maroon;   
+  color: whitesmoke;
+  background-color: maroon;
 }
 
-#mission_complete, #level_complete {
-    color:whitesmoke;
-    background-color:forestgreen;  
+#mission_complete,
+#level_complete {
+  color: whitesmoke;
+  background-color: forestgreen;
 }
 
 #gamestats {
-    height:30px;
-    width:450px;
-    top:5px;
-    right:5px;
-    padding:0 10px;
-    background-size: contain;
-    position: absolute;
-    z-index: 9999;
-    border-radius: 3%;
-    color: black;
-    border: 2px solid black;
-    background-color:goldenrod;
-    text-align:left;
-    line-height:30px;
-    font-weight:bolder;
-    font-size:1em;
+  height: 30px;
+  width: 450px;
+  top: 5px;
+  right: 5px;
+  padding: 0 10px;
+  background-size: contain;
+  position: absolute;
+  z-index: 9999;
+  border-radius: 3%;
+  color: black;
+  border: 2px solid black;
+  background-color: goldenrod;
+  text-align: left;
+  line-height: 30px;
+  font-weight: bolder;
+  font-size: 1em;
 }
 
 .btn_run_game {
-    height:50px;
-    width:200px;
-    background-size: contain;
-    position: absolute;
-    z-index: 9999;
-    top: 40%;
-    left: 40%;
-    border-radius: 25px;
-    color: black;
-    border: 2px solid black;
-    padding:0;
-    background-color:goldenrod;
-    text-align:center;
-    line-height:1.35em;
-    font-weight:bolder;
-    font-size:1.35em;
-    display:none;
+  height: 6vh;
+  width: 14vw;
+  background-size: contain;
+  position: absolute;
+  z-index: 9999;
+  top: 45vh;
+  left: 43vw;
+  border-radius: 25px;
+  color: black;
+  border: 2px solid black;
+  padding: 0;
+  background-color: goldenrod;
+  text-align: center;
+  line-height: 1.35em;
+  font-weight: bolder;
+  font-size: 1.35em;
+  display: none;
 }
 
-#controls{
-    height:32px;
-    width:32px;
-    background-size: contain;
-    position: absolute;
-    z-index: 9999;
-    right:50%;
-    bottom:10px;
+#controls {
+  height: 2vw;
+  width: 2vw;
+  background-size: contain;
+  position: absolute;
+  z-index: 9999;
+  left: 49vw;
+  bottom: 1vh;
 }
 
-.pause{
-    background-image: url("../img/pause.png");
+.pause {
+  background-image: url("../img/pause.png");
 }
 
-.play{
-    background-image: url("../img/play.png");
+.play {
+  background-image: url("../img/play.png");
 }
 
 #avatar {
-    height: 40px;
-    width: 40px;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    background-image: url("../img/bee_left.png");
-    background-size: contain;
-    position: absolute;
-    z-index: 9990;
-    top: 60%;
-    left: 90%;
-    /*border: 2px solid red;*/
+  height: 4vh;
+  width: 4vh;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-image: url("../img/bee_left.png");
+  background-size: contain;
+  position: absolute;
+  z-index: 9990;
+  top: 62vh;
+  left: 96vw;
+  /*border: 2px solid red;*/
 }
 
 .bird {
-    height: 88px;
-    width: 99px;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    background-repeat: no-repeat;
-    background-size: contain;
-    position: absolute;
-    z-index: 9990;
-    top: 50%;
-    left: -90px;
-    /*border: 2px solid red;*/
+  height: 11vh;
+  width: 12vh;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  z-index: 9990;
+  top: 50%;
+  left: -90px;
+  /*border: 2px solid red;*/
 }
 
-.b1{background-image: url("../img/bird.webp");}
-.b2{background-image: url("../img/bird2.gif");}
+.b1 {
+  background-image: url("../img/bird.webp");
+}
+.b2 {
+  background-image: url("../img/bird2.gif");
+}
+
+.cloud {
+  height: 20vh;
+  width: 30vh;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  z-index: 3800;
+  top: 50%;
+  left: -50vh;
+  /*border: 2px solid red;*/
+}
+
+.c1 {
+  background-image: url("../img/cloud1.png");
+}
+.c2 {
+  background-image: url("../img/cloud2.png");
+}
+.c3 {
+  background-image: url("../img/cloud3.png");
+}
+.c4 {
+  background-image: url("../img/cloud4.png");
+}
+.rain {
+  height: 20vw;
+  width: 40vh;
+  background-image: url("../img/raincloud.webp");
+}
