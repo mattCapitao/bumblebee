@@ -3,9 +3,19 @@ import Level from "./level.js";
 import Hive from "./hive.js";
 import Bee from "./bee.js";
 
-
 let //Bee
   { l, t, mv } = Bee.movement,
+  //Cloud
+  newCloud = 0,
+  cloudCount = 0,
+  maxClouds = 5,
+  cloudSpeed = 0,
+  cloudSpeedMin = 1,
+  cloudSpeedMax = 3,
+  cloudHeight = 0,
+  cloudType = 0,
+  cloudClass = "",
+  lastCloudClass = "",
   //Bird
   newBird = 0,
   birdSpeed = 0,
@@ -44,29 +54,37 @@ window.setInterval(function () {
     }
 
     $("#hive").each(function () {
+      Bee.inHive = false;
       if (
         $(this).offset().left <
           $("#avatar").offset().left + $("#avatar").width() &&
         $(this).offset().left + $(this).width() > $("#avatar").offset().left &&
         $(this).offset().top <
           $("#avatar").offset().top + $("#avatar").height() &&
-        $(this).offset().top + ($(this).height() - 40) >
+        $(this).offset().top + ($(this).height() - 10) >
           $("#avatar").offset().top
       ) {
-				let convertQuantity = (1 / Level.pollenToHoney);
-        if (Bee.pollen/convertQuantity >= 1) {
+        Bee.inHive = true;
+        let convertQuantity = 1 / Level.pollenToHoney;
+        if (Bee.pollen / convertQuantity >= 1) {
           Hive.convertPollen(convertQuantity);
         }
+      } else {
+        Bee.inHive = false;
       }
       if (Hive.honey >= Level.honeyGoal) {
         Level.complete();
       }
     });
 
-    if (rng(1, 1000) > newFlowerThreshold) {
+    let flowerOddsModifier = 0;
+    if (Level.seconds < 3) {
+      flowerOddsModifier = 50;
+    }
+    if (rng(1, 1000) > newFlowerThreshold - flowerOddsModifier) {
       flowerType = Math.trunc(rng(1, 4001) / 1000 + 1);
-      flowerX = rng(1, 149);
-      flowerY = rng(20, 750);
+      flowerX = rng(1, 34);
+      flowerY = rng(1, 94);
       flowerDiff = lastFlowerY - flowerY;
       if (flowerDiff > -40 && flowerDiff < 0) {
         flowerY -= 50;
@@ -88,9 +106,9 @@ window.setInterval(function () {
           flowerType +
           '" style="display:none;bottom:' +
           flowerX +
-          "px;left:" +
+          "vh;left:" +
           flowerY +
-          'px;"></div>'
+          'vw;"></div>'
       )
         .appendTo(game)
         .slideToggle(3000);
@@ -112,12 +130,15 @@ window.setInterval(function () {
         $(this).offset().top <
           $("#avatar").offset().top + $("#avatar").height() &&
         $(this).offset().top + ($(this).height() - 40) >
-          $("#avatar").offset().top
+          $("#avatar").offset().top &&
+        currentTimeSeconds < $(this).attr("data-expire")
       ) {
+        console.log(currentTimeSeconds, $(this).attr("data-expire"));
+
         currentFlowerPollen = $(this).attr("data-pollen") * 1;
 
         (pollenTop = $(this).offset().top - 20),
-          (pollenLeft = $(this).offset().left - 480);
+          (pollenLeft = $(this).offset().left + 20);
         $(
           '<div class="pollen" style="top:' +
             pollenTop +
@@ -149,6 +170,77 @@ window.setInterval(function () {
       }
     });
 
+    newCloud = rng(1, 1000);
+    if (
+      (newCloud > Level.cloudGenThreshold && cloudCount <= maxClouds) ||
+      cloudCount < 1
+    ) {
+      cloudSpeed = rng(cloudSpeedMin, cloudSpeedMax);
+      cloudHeight = rng(1, 30);
+      cloudType = rng(1, 10);
+
+      cloudClass = "c1";
+      if (cloudType > 2) {
+        cloudClass = "c2";
+      }
+      if (cloudType > 4) {
+        cloudClass = "c3";
+      }
+      if (cloudType > 7) {
+        cloudClass = "c4";
+      }
+
+      if (cloudType + Level.current > 10) {
+        cloudClass = "rain";
+        cloudHeight = cloudHeight > 14 ? cloudHeight : 15;
+        //cloudHeight = 15;
+        cloudSpeed = 5;
+      }
+
+      console.log("cloudClass: ", cloudClass);
+      console.log("lastCloudClass: ", lastCloudClass);
+      if (cloudCount <= maxClouds && cloudClass !== lastCloudClass) {
+        let size = "";
+        if (cloudClass !== "rain") {
+          let cloudScale = 1 + rng(1, 9) / 10;
+          let height = 20 * cloudScale;
+          let width = 30 * cloudScale;
+          size = "width:" + width + "vh;height:" + height + "vh;";
+        }
+
+        cloudCount++;
+        console.log("cloudCount", cloudCount);
+        $("#game").append(
+          '<div class="cloud ' +
+            cloudClass +
+            '" style="top:' +
+            cloudHeight +
+            "%;" +
+            size +
+            '" data-speed="' +
+            cloudSpeed +
+            '"></div>'
+        );
+        lastCloudClass = cloudClass;
+      }
+    }
+
+    $(".cloud").each(function () {
+      $(this).animate(
+        {
+          left: "+=" + $(this).attr("data-speed"),
+          top: "+=0",
+        },
+        1
+      );
+
+      if ($(this).offset().left > $("#game").width()) {
+        $(this).remove();
+        cloudCount--;
+        console.log("cloudCount", cloudCount);
+      }
+    });
+
     newBird = rng(1, 1000);
 
     if (newBird > Level.birdGenThreshold) {
@@ -156,14 +248,13 @@ window.setInterval(function () {
       birdHeight = rng(20, 70);
       birdType = rng(1, 6);
 
-      if (birdType < 5) {
-        birdClass = "b1";
-      } else {
+      birdClass = "b1";
+
+      if (birdType + Level.current > 5 && Level.current > 1) {
         birdClass = "b2";
         birdSpeed *= 1.5;
       }
 
-      $(this).addClass(birdClass);
       $("#game").append(
         '<div class="bird ' +
           birdClass +
@@ -177,15 +268,51 @@ window.setInterval(function () {
     }
 
     $(".bird").each(function () {
+      let topPath = "+=0";
+      if (Level.current >= 1) {
+        if ($(this).hasClass("dive") && $(this).attr("data-diveframes") > 0) {
+          let frames = $(this).attr("data-diveframes");
+          frames--;
+          $(this).attr("data-diveframes", frames);
+          if (frames < 1) {
+            $(this).removeClass("dive");
+          }
+          topPath = "+=" + $(this).attr("data-speed");
+        } else if (
+          $(this).hasClass("climb") &&
+          $(this).attr("data-climbframes") > 0
+        ) {
+          let frames = $(this).attr("data-climbframes");
+          frames--;
+          $(this).attr("data-climbframes", frames);
+          if (frames < 1) {
+            $(this).removeClass("climb");
+          }
+          topPath = "-=" + $(this).attr("data-speed");
+        } else {
+          let flightPath = rng(1, 200);
+          if (flightPath <= Level.current) {
+            topPath = "-=" + $(this).attr("data-speed");
+            $(this).addClass("climb");
+            $(this).attr("data-climbframes", 20);
+          }
+          if (flightPath >= 200 - Level.current) {
+            topPath = "+=" + $(this).attr("data-speed");
+            $(this).addClass("dive");
+            $(this).attr("data-diveframes", 20);
+          }
+        }
+      }
+
       $(this).animate(
         {
           left: "+=" + $(this).attr("data-speed"),
-          top: "+=0",
+          top: topPath,
         },
         1
       );
 
-      if ($(this).offset().left > 1200) {
+      if ($(this).offset().left > $("#game").width() * Level.birdRange) {
         $(this).remove();
         let points =
           $(this).attr("data-speed") * Level.birdSpeedMultiplier * 100;
@@ -206,7 +333,8 @@ window.setInterval(function () {
         $(this).offset().top + ($(this).height() - 40) >
           $("#avatar").offset().top &&
         $(this).offset().top + ($(this).height() - 90) <
-          $("#avatar").offset().top
+          $("#avatar").offset().top &&
+        Bee.inHive === false
       ) {
         Bee.die();
       }
@@ -226,11 +354,12 @@ window.setInterval(function () {
       },
       2
     );
+
+    Level.seconds += 0.04;
   } else {
-		if(!Game.paused){
-			$("#start").slideDown(2000);
-		}
-    
+    if (!Game.paused) {
+      $("#start").slideDown(2000);
+    }
   }
 }, 40);
 
@@ -240,22 +369,20 @@ $(document).on("click", ".btn_run_game", function () {
   $(".banner").hide("fast");
 });
 
-$(document).on("click", ".pause", function(){
-	if(Game.running && !Game.paused){
-		Game.pause();
-		$(this).removeClass("pause");
-		$(this).addClass("play")
-	}
-	
+$(document).on("click", ".pause", function () {
+  if (Game.running && !Game.paused) {
+    Game.pause();
+    $(this).removeClass("pause");
+    $(this).addClass("play");
+  }
 });
 
-$(document).on("click", ".play", function(){
-	if(!Game.running && Game.paused){
-		Game.start();
-		$(this).removeClass("play");
-		$(this).addClass("pause")
-	}
-
+$(document).on("click", ".play", function () {
+  if (!Game.running && Game.paused) {
+    Game.start();
+    $(this).removeClass("play");
+    $(this).addClass("pause");
+  }
 });
 
 $(document)

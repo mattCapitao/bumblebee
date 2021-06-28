@@ -1,4 +1,3 @@
-
 import Level from "./level.js";
 import Hive from "./hive.js";
 import Bee from "./bee.js";
@@ -23,12 +22,14 @@ const Game = {
   start: () => {
     Game.running = true;
     Game.paused = false;
-    if(Bee.dead){Bee.init();}
+    if (Bee.dead) {
+      Bee.init();
+    }
   },
 
   pause: () => {
-      Game.paused = true;
-      Game.stop();
+    Game.paused = true;
+    Game.stop();
   },
 
   stop: () => {
