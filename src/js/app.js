@@ -25,6 +25,7 @@ let //Bee
   birdType = 0,
   birdClass = "",
   //Flower
+	flowerOddsModifier = 0,
   currentTimeSeconds = 0,
   currentFlowerPollen = 0,
   flowerType = 0,
@@ -77,10 +78,20 @@ window.setInterval(function () {
       }
     });
 
-    let flowerOddsModifier = 0;
-    if (Level.seconds < 3) {
+
+    if (Level.seconds < 3 && Level.fresh) {
       flowerOddsModifier = 50;
     }
+		if(Level.seconds >= 3 && Level.fresh){
+			Level.fresh = false;
+			flowerOddsModifier -= 50;
+		}
+		console.log("Rain Effect = ", Game.rainEffect);
+		if(Game.rainEffect && Level.seconds > 5  && flowerOddsModifier < 42){
+			flowerOddsModifier += 42;
+		}
+		console.log("Flower modifier", flowerOddsModifier);
+
     if (rng(1, 1000) > newFlowerThreshold - flowerOddsModifier) {
       flowerType = Math.trunc(rng(1, 4001) / 1000 + 1);
       flowerX = rng(1, 34);
@@ -94,6 +105,7 @@ window.setInterval(function () {
       }
       lastFlowerY = flowerY;
       flowerExpire = flowerType * 9;
+			if(Game.raineffect){flowerExpire /= 2};
       flowerPollen = (6 - flowerType) * pollenMultiplier;
       let expireTime = new Date().getTime() / 1000;
       expireTime = expireTime + flowerExpire;
@@ -175,26 +187,29 @@ window.setInterval(function () {
       (newCloud > Level.cloudGenThreshold && cloudCount <= maxClouds) ||
       cloudCount < 1
     ) {
+			
       cloudSpeed = rng(cloudSpeedMin, cloudSpeedMax);
       cloudHeight = rng(1, 30);
-      cloudType = rng(1, 10);
+      cloudType = rng(1, 16);
 
       cloudClass = "c1";
-      if (cloudType > 2) {
+      if (cloudType > 4) {
         cloudClass = "c2";
       }
-      if (cloudType > 4) {
+      if (cloudType > 8) {
         cloudClass = "c3";
       }
-      if (cloudType > 7) {
+      if (cloudType > 12) {
         cloudClass = "c4";
       }
 
-      if (cloudType + Level.current > 10) {
+      if ((cloudType + Level.current > 16) || (Level.seconds > 60 && Level.hasRained === false)) {
         cloudClass = "rain";
         cloudHeight = cloudHeight > 14 ? cloudHeight : 15;
         //cloudHeight = 15;
         cloudSpeed = 5;
+				Game.rainEffect = true;
+				Level.hasRained = true;
       }
 
       console.log("cloudClass: ", cloudClass);
@@ -210,6 +225,8 @@ window.setInterval(function () {
 
         cloudCount++;
         console.log("cloudCount", cloudCount);
+				let raineffectCycles = "";
+				if(cloudClass === 'rain'){raineffectCycles = ' data-rec="350" ';}
         $("#game").append(
           '<div class="cloud ' +
             cloudClass +
@@ -219,13 +236,23 @@ window.setInterval(function () {
             size +
             '" data-speed="' +
             cloudSpeed +
-            '"></div>'
+            '"' + raineffectCycles + '></div>'
         );
+
         lastCloudClass = cloudClass;
       }
     }
 
     $(".cloud").each(function () {
+			let rec = $(this).attr("data-rec");
+			if(rec > 0){
+				rec--;
+				$(this).attr("data-rec", rec);
+				if(rec < 1){
+					Game.rainEffect=false;
+					flowerOddsModifier -= 42;
+				}
+			}
       $(this).animate(
         {
           left: "+=" + $(this).attr("data-speed"),

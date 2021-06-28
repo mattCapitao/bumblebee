@@ -92,7 +92,7 @@ body {
   right: 1vw;
   top: 54.5vh;
   z-index: 4000;
-  border: 2px solid red;
+  /*border: 2px solid red;*/
 }
 
 .flower {

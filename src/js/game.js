@@ -12,6 +12,7 @@ const Game = {
     Game.lives = 5;
     Game.score = 0;
     Game.reset = false;
+    
     $("#score").html(Game.score);
     $("#lives").html(Game.startingLives);
     Level.init();
