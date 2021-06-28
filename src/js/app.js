@@ -269,7 +269,7 @@ window.setInterval(function () {
 
     $(".bird").each(function () {
       let topPath = "+=0";
-      if (Level.current >= 1) {
+      if (Level.current >= 4) {
         if ($(this).hasClass("dive") && $(this).attr("data-diveframes") > 0) {
           let frames = $(this).attr("data-diveframes");
           frames--;
