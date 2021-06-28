@@ -10,8 +10,11 @@ const Level = {
 
   init: () => {
     Level.seconds = 0;
+		Level.fresh = true;
+		Level.hasRained = false;
     Bee.init();
     Hive.init();
+		Game.rainEffect = false;
     $(".level").html(Level.current);
     $("#start").html("Start Level " + Level.current);
     Object.assign(Level, Levels["l" + Level.current]);
