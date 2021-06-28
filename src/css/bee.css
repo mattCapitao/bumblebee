@@ -14,6 +14,19 @@ body {
     overflow: hidden;
 }
 
+#github {
+    height: 50px;
+    width: 900px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    text-align:center;
+    background-color: azure;
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+}
+
 #sky {
     height: 250px;
     width: 900px;
