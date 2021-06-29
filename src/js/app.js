@@ -292,19 +292,6 @@ window.setInterval(function () {
             $(this).removeClass("lightning");
             $(this).addClass("hadLightning");
           }
-          /*
-								console.log(
-									$(this).offset().left,
-									" < ",
-									$("#avatar").offset().left + $("#avatar").width(),
-									"="
-								);
-								console.log(
-									$(this).offset().left + $(this).width(),
-									" > ",
-									$("#avatar").offset().left
-								);
-									*/
 
           if (
             $(this).offset().left <
@@ -372,11 +359,14 @@ window.setInterval(function () {
           let frames = $(this).attr("data-diveframes");
           frames--;
           $(this).attr("data-diveframes", frames);
+          
           if (frames < 1) {
             $(this).removeClass("dive");
           }
           topPath = "+=" + $(this).attr("data-speed");
+
         } else if (
+
           $(this).hasClass("climb") &&
           $(this).attr("data-climbframes") > 0
         ) {
@@ -387,7 +377,9 @@ window.setInterval(function () {
             $(this).removeClass("climb");
           }
           topPath = "-=" + $(this).attr("data-speed");
+
         } else {
+
           let flightPath = rng(1, 1000 - Level.current * 2);
           if (flightPath <= Level.current) {
             topPath = "-=" + $(this).attr("data-speed");
@@ -452,7 +444,6 @@ window.setInterval(function () {
       },
       2
     );
-
     Level.seconds += 0.04;
   } else {
     if (!Game.paused) {
