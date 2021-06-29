@@ -25,7 +25,7 @@ let //Bee
   birdType = 0,
   birdClass = "",
   //Flower
-	flowerOddsModifier = 0,
+  flowerOddsModifier = 0,
   currentTimeSeconds = 0,
   currentFlowerPollen = 0,
   flowerType = 0,
@@ -42,11 +42,6 @@ let //Bee
   pollenLeft = 0;
 
 Game.init();
-
-function rng(min, max) {
-  let random_number = Math.random() * (max - min) + min;
-  return Math.floor(random_number);
-}
 
 window.setInterval(function () {
   if (Game.running) {
@@ -78,19 +73,18 @@ window.setInterval(function () {
       }
     });
 
-
     if (Level.seconds < 3 && Level.fresh) {
       flowerOddsModifier = 50;
     }
-		if(Level.seconds >= 3 && Level.fresh){
-			Level.fresh = false;
-			flowerOddsModifier -= 50;
-		}
-		console.log("Rain Effect = ", Game.rainEffect);
-		if(Game.rainEffect && Level.seconds > 5  && flowerOddsModifier < 42){
-			flowerOddsModifier += 42;
-		}
-		console.log("Flower modifier", flowerOddsModifier);
+    if (Level.seconds >= 3 && Level.fresh) {
+      Level.fresh = false;
+      flowerOddsModifier -= 50;
+    }
+    //console.log("Rain Effect = ", Game.rainEffect);
+    if (Game.rainEffect && Level.seconds > 5 && flowerOddsModifier < 42) {
+      flowerOddsModifier += 42;
+    }
+    //console.log("Flower modifier", flowerOddsModifier);
 
     if (rng(1, 1000) > newFlowerThreshold - flowerOddsModifier) {
       flowerType = Math.trunc(rng(1, 4001) / 1000 + 1);
@@ -105,7 +99,9 @@ window.setInterval(function () {
       }
       lastFlowerY = flowerY;
       flowerExpire = flowerType * 9;
-			if(Game.raineffect){flowerExpire /= 2};
+      if (Game.raineffect) {
+        flowerExpire /= 2;
+      }
       flowerPollen = (6 - flowerType) * pollenMultiplier;
       let expireTime = new Date().getTime() / 1000;
       expireTime = expireTime + flowerExpire;
@@ -145,7 +141,7 @@ window.setInterval(function () {
           $("#avatar").offset().top &&
         currentTimeSeconds < $(this).attr("data-expire")
       ) {
-        console.log(currentTimeSeconds, $(this).attr("data-expire"));
+        ///console.log(currentTimeSeconds, $(this).attr("data-expire"));
 
         currentFlowerPollen = $(this).attr("data-pollen") * 1;
 
@@ -183,11 +179,11 @@ window.setInterval(function () {
     });
 
     newCloud = rng(1, 1000);
+
     if (
       (newCloud > Level.cloudGenThreshold && cloudCount <= maxClouds) ||
       cloudCount < 1
     ) {
-			
       cloudSpeed = rng(cloudSpeedMin, cloudSpeedMax);
       cloudHeight = rng(1, 30);
       cloudType = rng(1, 16);
@@ -203,18 +199,21 @@ window.setInterval(function () {
         cloudClass = "c4";
       }
 
-      if ((cloudType + Level.current > 16) || (Level.seconds > 60 && Level.hasRained === false)) {
+      if (
+        cloudType + Level.current > 16 ||
+        (Level.seconds > 60 && Level.hasRained === false)
+      ) {
         cloudClass = "rain";
         cloudHeight = cloudHeight > 14 ? cloudHeight : 15;
         //cloudHeight = 15;
         cloudSpeed = 5;
-				Game.rainEffect = true;
-				Level.hasRained = true;
+        Game.rainEffect = true;
+        Level.hasRained = true;
       }
 
-      console.log("cloudClass: ", cloudClass);
-      console.log("lastCloudClass: ", lastCloudClass);
-      if (cloudCount <= maxClouds && cloudClass !== lastCloudClass) {
+      //console.log("cloudClass: ", cloudClass);
+      //console.log("lastCloudClass: ", lastCloudClass);
+      if (/*cloudCount <= maxClouds && */ cloudClass !== lastCloudClass) {
         let size = "";
         if (cloudClass !== "rain") {
           let cloudScale = 1 + rng(1, 9) / 10;
@@ -224,9 +223,13 @@ window.setInterval(function () {
         }
 
         cloudCount++;
-        console.log("cloudCount", cloudCount);
-				let raineffectCycles = "";
-				if(cloudClass === 'rain'){raineffectCycles = ' data-rec="350" ';}
+
+        //console.log("cloudCount", cloudCount);
+        let raineffectCycles = "";
+        if (cloudClass === "rain") {
+          raineffectCycles = ' data-rec="300" ';
+        }
+
         $("#game").append(
           '<div class="cloud ' +
             cloudClass +
@@ -236,23 +239,88 @@ window.setInterval(function () {
             size +
             '" data-speed="' +
             cloudSpeed +
-            '"' + raineffectCycles + '></div>'
+            '"' +
+            raineffectCycles +
+            "></div>"
         );
-
         lastCloudClass = cloudClass;
       }
     }
 
     $(".cloud").each(function () {
-			let rec = $(this).attr("data-rec");
-			if(rec > 0){
-				rec--;
-				$(this).attr("data-rec", rec);
-				if(rec < 1){
-					Game.rainEffect=false;
-					flowerOddsModifier -= 42;
-				}
-			}
+      let rec = $(this).attr("data-rec");
+      if (rec > 0) {
+        rec--;
+        $(this).attr("data-rec", rec);
+        if (rec < 1) {
+          Game.rainEffect = false;
+          flowerOddsModifier -= 42;
+        }
+      }
+
+      if (
+        // check for qualification and chance to add lighning
+        $(this).hasClass("rain") &&
+        !$(this).hasClass("lightning") &&
+        !$(this).hasClass("hadLightning") &&
+        Game.lightningEffect === false &&
+        Level.lightningTreshold > 0
+      ) {
+        let lightningStrike = rng(1, 1000);
+        let bolster = lightningBolster($(this).offset().left);
+
+        if (lightningStrike + bolster > Level.lightningTreshold) {
+          Game.lightningEffect = true;
+          let setLec = rng(50, 150);
+          $(this).addClass("lightning");
+          $(this).attr("data-lec", setLec);
+          $(this).append('<img src="src/img/lightning2.gif" />');
+        }
+      }
+
+      //console.log("Lightning", Game.lightningEffect);
+
+      if ($(this).hasClass("lightning")) {
+        let lec = $(this).attr("data-lec");
+
+        if (lec > 0) {
+          lec--;
+          $(this).attr("data-lec", lec);
+          if (lec < 1) {
+            Game.lightningEffect = false;
+            $(this).html("");
+            $(this).removeClass("lightning");
+            $(this).addClass("hadLightning");
+          }
+          /*
+								console.log(
+									$(this).offset().left,
+									" < ",
+									$("#avatar").offset().left + $("#avatar").width(),
+									"="
+								);
+								console.log(
+									$(this).offset().left + $(this).width(),
+									" > ",
+									$("#avatar").offset().left
+								);
+									*/
+
+          if (
+            $(this).offset().left <
+              $("#avatar").offset().left + $("#avatar").width() &&
+            $(this).offset().left + ($(this).width() - $(this).width() / 5) >
+              $("#avatar").offset().left &&
+            $(this).offset().top < $("#avatar").offset().top &&
+            // this should include + $("#avatar").height() but i have removed for now since cloud animation top is slightly higher than visual element
+            $(this).hasClass("lightning") &&
+            Bee.inHive === false
+          ) {
+            Bee.die();
+          }
+        }
+      }
+
       $(this).animate(
         {
           left: "+=" + $(this).attr("data-speed"),
@@ -262,9 +330,12 @@ window.setInterval(function () {
       );
 
       if ($(this).offset().left > $("#game").width()) {
+        if ($(this).attr("data-lec") > 0) {
+          Game.lightningEffect = false;
+        }
         $(this).remove();
         cloudCount--;
-        console.log("cloudCount", cloudCount);
+        //console.log("cloudCount", cloudCount);
       }
     });
 
@@ -317,16 +388,16 @@ window.setInterval(function () {
           }
           topPath = "-=" + $(this).attr("data-speed");
         } else {
-          let flightPath = rng(1, 200);
+          let flightPath = rng(1, 1000 - Level.current * 2);
           if (flightPath <= Level.current) {
             topPath = "-=" + $(this).attr("data-speed");
             $(this).addClass("climb");
-            $(this).attr("data-climbframes", 20);
+            $(this).attr("data-climbframes", Level.current * 3);
           }
-          if (flightPath >= 200 - Level.current) {
+          if (flightPath >= 400 - Level.current) {
             topPath = "+=" + $(this).attr("data-speed");
             $(this).addClass("dive");
-            $(this).attr("data-diveframes", 20);
+            $(this).attr("data-diveframes", Level.current * 3);
           }
         }
       }
@@ -389,6 +460,23 @@ window.setInterval(function () {
     }
   }
 }, 40);
+
+function rng(min, max) {
+  let random_number = Math.random() * (max - min) + min;
+  return Math.floor(random_number);
+}
+
+function lightningBolster(cloudOffset) {
+  let unit = $("#game").width() / 10;
+  let units = cloudOffset / unit;
+  let bolster = units * Level.lightningBolsterFactor;
+  if (units > Level.lightningPeakBolster) {
+    let reduction =
+      Level.lightningBolsterFactor * (units - Level.lightningPeakBolster);
+    bolster -= reduction;
+  }
+  return bolster;
+}
 
 $(document).on("click", ".btn_run_game", function () {
   Game.start();

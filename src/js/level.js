@@ -12,6 +12,9 @@ const Level = {
     Level.seconds = 0;
 		Level.fresh = true;
 		Level.hasRained = false;
+		Level.lightningThreshold = 0;
+		Level.lightningBolsterFactor = 0,
+    Level.lightningPeakBolster = 0,
     Bee.init();
     Hive.init();
 		Game.rainEffect = false;

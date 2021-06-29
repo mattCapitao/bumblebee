@@ -276,4 +276,13 @@ body {
   height: 20vw;
   width: 40vh;
   background-image: url("../img/raincloud.webp");
+  /*border: 2px solid red;*/
+}
+.rain img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  padding-top: 15vh;
+  height: 60vh;
 }
