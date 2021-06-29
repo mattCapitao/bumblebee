@@ -18,7 +18,7 @@ const Bee = {
       .css("background-image", "url(src/img/" + Bee.sprite + ")")
       .animate({
         left: "94vw",
-        top: "60vh",
+        top: "57vh",
         rotation: 0,
       });
 
@@ -31,7 +31,8 @@ const Bee = {
     $("#avatar").css("background-image", "url(src/img/bee_left.png)").animate(
       {
         top: "85vh",
-        rotation: 180,
+        left: "94vw",
+        rotation: 900,
       },
       { duration: 2500 }
     );
