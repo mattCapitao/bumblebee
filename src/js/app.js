@@ -386,7 +386,7 @@ window.setInterval(function () {
             $(this).addClass("climb");
             $(this).attr("data-climbframes", Level.current * 3);
           }
-          if (flightPath >= 400 - Level.current) {
+          if (flightPath >= (1000 - Level.current)) {
             topPath = "+=" + $(this).attr("data-speed");
             $(this).addClass("dive");
             $(this).attr("data-diveframes", Level.current * 3);
