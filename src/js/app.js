@@ -379,17 +379,17 @@ window.setInterval(function () {
           topPath = "-=" + $(this).attr("data-speed");
 
         } else {
-
-          let flightPath = rng(1, 1000 - Level.current * 2);
+          let flightPathCeiling = 800;
+          let flightPath = rng(1, flightPathCeiling );
           if (flightPath <= Level.current) {
             topPath = "-=" + $(this).attr("data-speed");
             $(this).addClass("climb");
-            $(this).attr("data-climbframes", Level.current * 3);
+            $(this).attr("data-climbframes", Level.current * 2);
           }
-          if (flightPath >= (1000 - Level.current)) {
+          if (flightPath >= (flightPathCeiling - Level.current)) {
             topPath = "+=" + $(this).attr("data-speed");
             $(this).addClass("dive");
-            $(this).attr("data-diveframes", Level.current * 3);
+            $(this).attr("data-diveframes", Level.current * 2);
           }
         }
       }
