@@ -8,7 +8,7 @@ const Game = {
   keyMap: { 37: false, 38: false, 39: false, 40: false },
 
   init: () => {
-    Level.current = 1;
+    Level.current = 4;
     Game.lives = 5;
     Game.score = 0;
     Game.reset = false;
