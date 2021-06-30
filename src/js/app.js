@@ -25,6 +25,9 @@ let //Bee
   birdType = 0,
   birdClass = "",
   //Flower
+  flowerCount = 0,
+  maxFlowers = 20,
+  minFlowers = 1,
   flowerOddsModifier = 0,
   currentTimeSeconds = 0,
   currentFlowerPollen = 0,
@@ -86,7 +89,11 @@ window.setInterval(function () {
     }
     //console.log("Flower modifier", flowerOddsModifier);
 
-    if (rng(1, 1000) > newFlowerThreshold - flowerOddsModifier) {
+    if( (flowerCount <= maxFlowers &&
+        rng(1, 1000) > newFlowerThreshold - flowerOddsModifier ) || 
+        flowerCount < minFlowers 
+        )
+      {
       flowerType = Math.trunc(rng(1, 4001) / 1000 + 1);
       flowerX = rng(1, 34);
       flowerY = rng(1, 94);
@@ -120,6 +127,7 @@ window.setInterval(function () {
       )
         .appendTo(game)
         .slideToggle(3000);
+        flowerCount ++;
     }
 
     $(".flower").each(function (element) {
@@ -128,6 +136,7 @@ window.setInterval(function () {
       if ($(this).attr("data-expire") <= currentTimeSeconds) {
         $(this).slideToggle("slow", function () {
           $(this).remove();
+          flowerCount--;
         });
       }
 
@@ -174,6 +183,7 @@ window.setInterval(function () {
         Game.score += Math.trunc(points);
         $(this).fadeOut(2000, function () {
           $(this).remove();
+          flowerCount--;
         });
       }
     });
