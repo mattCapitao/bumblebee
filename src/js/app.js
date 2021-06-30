@@ -340,12 +340,12 @@ window.setInterval(function () {
 
     if (newBird > Level.birdGenThreshold) {
       birdSpeed = rng(birdSpeedMin, birdSpeedMax) * Level.birdSpeedMultiplier;
-      birdHeight = rng(20, 70);
-      birdType = rng(1, 6);
+      birdHeight = rng(Level.birdTopOffset.min, Level.birdTopOffset.max);
+      birdType = rng(1, 20);
 
       birdClass = "b1";
 
-      if (birdType + Level.current > 5 && Level.current > 1) {
+      if (birdType + Level.current > 21) {
         birdClass = "b2";
         birdSpeed *= 1.5;
       }

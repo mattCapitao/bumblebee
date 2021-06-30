@@ -10,11 +10,13 @@ const Levels = {
   l2: {
     birdSpeedMultiplier: 1.5,
     birdGenThreshold: 988,
+    birdTopOffset:{min:20 , max:80},
     honeyGoal: 15,
   },
   l3: {
     birdSpeedMultiplier: 1.75,
     birdGenThreshold: 986,
+    birdTopOffset:{min:20 , max:90},
     lightningTreshold: 997,
     lightningBolsterFactor: 3,
     lightningPeakBolster: 2,
