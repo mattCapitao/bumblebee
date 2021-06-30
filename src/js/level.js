@@ -15,6 +15,7 @@ const Level = {
 		Level.lightningThreshold = 0;
 		Level.lightningBolsterFactor = 0,
     Level.lightningPeakBolster = 0,
+    Level.birdTopOffset={min:20,max:70},
     Bee.init();
     Hive.init();
 		Game.rainEffect = false;
