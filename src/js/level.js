@@ -17,10 +17,15 @@ const Level = {
     Level.lightningPeakBolster = 0,
     Level.birdTopOffset={min:20,max:70},
     Bee.init();
+    Bee.movement.mv += .5;
     Hive.init();
 		Game.rainEffect = false;
     $(".level").html(Level.current);
     $("#start").html("Start Level " + Level.current);
+    $(".flower").each(function (element) {
+        $(this).remove();
+        flowerCount--;
+    });
     Object.assign(Level, Levels["l" + Level.current]);
   },
 

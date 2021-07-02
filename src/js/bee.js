@@ -6,7 +6,7 @@ const Bee = {
   movement: {
     l: "+=0",
     t: "+=0",
-    mv: 10,
+    mv: 7,
   },
 
   init: () => {

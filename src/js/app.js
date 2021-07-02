@@ -29,7 +29,7 @@ let //Bee
   //Flower
   flowerCount = 0,
   maxFlowers = 20,
-  minFlowers = 1,
+  minFlowers = 3,
   flowerOddsModifier = 0,
   currentTimeSeconds = 0,
   currentFlowerPollen = 0,
@@ -91,6 +91,8 @@ window.setInterval(function () {
     }
     //console.log("Flower modifier", flowerOddsModifier);
 
+    console.log(flowerCount);
+
     if( (flowerCount <= maxFlowers &&
         rng(1, 1000) > newFlowerThreshold - flowerOddsModifier ) || 
         flowerCount < minFlowers 
@@ -136,7 +138,7 @@ window.setInterval(function () {
       currentTimeSeconds = new Date().getTime() / 1000;
 
       if ($(this).attr("data-expire") <= currentTimeSeconds) {
-        $(this).slideToggle("slow", function () {
+          $(this).slideToggle("slow", function () {
           $(this).remove();
           flowerCount--;
         });
@@ -152,7 +154,8 @@ window.setInterval(function () {
           $("#avatar").offset().top &&
         currentTimeSeconds < $(this).attr("data-expire")
       ) {
-        ///console.log(currentTimeSeconds, $(this).attr("data-expire"));
+        //console.log(currentTimeSeconds, $(this).attr("data-expire"));
+        
 
         currentFlowerPollen = $(this).attr("data-pollen") * 1;
 
@@ -212,7 +215,7 @@ window.setInterval(function () {
       }
 
       if (
-        cloudType + Level.current > 16 ||
+        cloudType + Level.current > 15 ||
         (Level.seconds > 60 && Level.hasRained === false)
       ) {
         cloudClass = "rain";
@@ -393,15 +396,15 @@ window.setInterval(function () {
         } else {
           let flightPathCeiling = 800;
           let flightPath = rng(1, flightPathCeiling );
-          if (flightPath <= Level.current) {
+          if (flightPath <= (Level.current * 1.2)) {
             topPath = "-=" + $(this).attr("data-speed");
             $(this).addClass("climb");
-            $(this).attr("data-climbframes", Level.current * 2);
+            $(this).attr("data-climbframes", Level.current * 2.5);
           }
-          if (flightPath >= (flightPathCeiling - Level.current)) {
+          if (flightPath >= (flightPathCeiling - (Level.current * 1.2))) {
             topPath = "+=" + $(this).attr("data-speed");
             $(this).addClass("dive");
-            $(this).attr("data-diveframes", Level.current * 2);
+            $(this).attr("data-diveframes", Level.current * 2.5);
           }
         }
       }
@@ -414,13 +417,14 @@ window.setInterval(function () {
         1
       );
 
-      if ($(this).offset().left > $("#game").width() * Level.birdRange) {
-        $(this).remove();
-        let points =
-          $(this).attr("data-speed") * Level.birdSpeedMultiplier * 100;
+      if ($(this).offset().left > $("#game").width()) {
+        
+        let points = $(this).attr("data-speed") * Level.birdSpeedMultiplier * 100;
+        
         Game.score += Math.trunc(points);
         Level.birdSpeedMultiplier *= 1.005;
         Level.birdGenThreshold -= 0.04;
+        $(this).remove();
       }
 
       if (

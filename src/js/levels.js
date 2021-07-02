@@ -3,8 +3,7 @@ const Levels = {
     birdGenThreshold: 990,
     cloudGenThreshold: 994,
     birdSpeedMultiplier: 1.25,
-    flowerOddsModifier: 0,
-    birdRange: 1,
+    flowerOddsModifier: 0,   
     honeyGoal: 5,
   },
   l2: {
