@@ -336,7 +336,7 @@ window.setInterval(function () {
           Game.rainSound = null;
           Game.fadeRainSound = false;
         } else {
-          Game.rainSound.volume -= 0.01;
+          Game.rainSound.volume -= 0.04;
         }
       }
 
