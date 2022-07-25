@@ -264,7 +264,9 @@ window.setInterval(function () {
         $(this).attr("data-rec", rec);
         if (rec < 1) {
           Game.rainEffect = false;
-          flowerOddsModifier -= 42;
+          if (flowerOddsModifier > 0) {
+            flowerOddsModifier -= 42;
+          }
         }
       }
 
