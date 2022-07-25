@@ -285,7 +285,7 @@ window.setInterval(function () {
 
         if (lightningStrike + bolster > Level.lightningTreshold) {
           Game.lightningEffect = true;
-          let setLec = rng(75, 150);
+          let setLec = rng(75, 125);
           $(this).addClass("lightning");
           $(this).attr("data-lec", setLec);
           $(this).append('<img src="src/img/lightning2.gif" />');
