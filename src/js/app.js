@@ -3,8 +3,6 @@ import Level from "./level.js";
 import Hive from "./hive.js";
 import Bee from "./bee.js";
 
-
-
 let //Bee
   { l, t, mv } = Bee.movement,
   //Cloud
@@ -89,13 +87,13 @@ window.setInterval(function () {
     if (Game.rainEffect && Level.seconds > 5 && flowerOddsModifier < 42) {
       flowerOddsModifier += 42;
     }
-    //console.log("Flower modifier", flowerOddsModifier);
+    console.log("Flower modifier", flowerOddsModifier);
 
-    if( (flowerCount <= maxFlowers &&
-        rng(1, 1000) > newFlowerThreshold - flowerOddsModifier ) || 
-        flowerCount < minFlowers 
-        )
-      {
+    if (
+      (flowerCount <= maxFlowers &&
+        rng(1, 1000) > newFlowerThreshold - flowerOddsModifier) ||
+      flowerCount < minFlowers
+    ) {
       flowerType = Math.trunc(rng(1, 4001) / 1000 + 1);
       flowerX = rng(1, 34);
       flowerY = rng(1, 94);
@@ -129,7 +127,7 @@ window.setInterval(function () {
       )
         .appendTo(game)
         .slideToggle(3000);
-        flowerCount ++;
+      flowerCount++;
     }
 
     $(".flower").each(function (element) {
@@ -371,14 +369,12 @@ window.setInterval(function () {
           let frames = $(this).attr("data-diveframes");
           frames--;
           $(this).attr("data-diveframes", frames);
-          
+
           if (frames < 1) {
             $(this).removeClass("dive");
           }
           topPath = "+=" + $(this).attr("data-speed");
-
         } else if (
-
           $(this).hasClass("climb") &&
           $(this).attr("data-climbframes") > 0
         ) {
@@ -389,16 +385,15 @@ window.setInterval(function () {
             $(this).removeClass("climb");
           }
           topPath = "-=" + $(this).attr("data-speed");
-
         } else {
           let flightPathCeiling = 800;
-          let flightPath = rng(1, flightPathCeiling );
+          let flightPath = rng(1, flightPathCeiling);
           if (flightPath <= Level.current) {
             topPath = "-=" + $(this).attr("data-speed");
             $(this).addClass("climb");
             $(this).attr("data-climbframes", Level.current * 2);
           }
-          if (flightPath >= (flightPathCeiling - Level.current)) {
+          if (flightPath >= flightPathCeiling - Level.current) {
             topPath = "+=" + $(this).attr("data-speed");
             $(this).addClass("dive");
             $(this).attr("data-diveframes", Level.current * 2);
