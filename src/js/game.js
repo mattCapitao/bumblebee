@@ -13,6 +13,7 @@ const Game = {
     Game.score = 0;
     Game.reset = false;
     Game.lightningEffect = false;
+    Game.rainSound = null;
     $("#score").html(Game.score);
     $("#lives").html(Game.startingLives);
     Level.init();

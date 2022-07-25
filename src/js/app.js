@@ -219,8 +219,8 @@ window.setInterval(function () {
         cloudSpeed = 5;
         Game.rainEffect = true;
         Level.hasRained = true;
-        let rainSound = new Audio("./src/audio/rain.mp3");
-        rainSound.play();
+        Game.rainSound = new Audio("./src/audio/rain.mp3");
+        Game.rainSound.play();
       }
 
       //console.log("cloudClass: ", cloudClass);
@@ -333,7 +333,8 @@ window.setInterval(function () {
       if ($(this).offset().left > $("#game").width()) {
         if ($(this).attr("data-lec") > 0) {
           Game.lightningEffect = false;
-          rainSound.pause();
+          Game.rainSound.pause();
+          Game.rainSound = null;
         }
         $(this).remove();
         cloudCount--;
