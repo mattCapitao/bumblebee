@@ -290,6 +290,7 @@ window.setInterval(function () {
           $(this).attr("data-lec", setLec);
           $(this).append('<img src="src/img/lightning2.gif" />');
           Game.thunderSound = new Audio("./src/audio/zap1.mp3");
+          Game.thunderSound.play();
         }
       }
 
