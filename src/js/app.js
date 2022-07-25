@@ -331,8 +331,16 @@ window.setInterval(function () {
       );
 
       if ($(this).offset().left > $("#game").width()) {
-        Game.rainSound.pause();
-        Game.rainSound = null;
+        if (Game.rainSound !== null) {
+          Game.rainSound.fade = () => {
+            let timer = null;
+            Game.rainSound.volume -= 0.005;
+            timer = setTimeout(Game.rainSound.fade, 5);
+          };
+          Game.rainSound.pause();
+          Game.rainSound = null;
+        }
+
         if ($(this).attr("data-lec") > 0) {
           Game.lightningEffect = false;
         }
