@@ -331,6 +331,7 @@ window.setInterval(function () {
       );
 
       if (Game.fadeRainSound == true) {
+        console.log(Game.rainSound.volume);
         if (Game.rainSound.volume <= 0.1) {
           Game.rainSound.pause();
           Game.rainSound = null;
