@@ -343,7 +343,10 @@ window.setInterval(function () {
         if ($(this).attr("data-lec") > 0) {
           Game.lightningEffect = false;
         }
-        Game.fadeRainSound = true;
+        if (Game.rainSound !== null) {
+          Game.fadeRainSound = true;
+        }
+
         $(this).remove();
         cloudCount--;
         //console.log("cloudCount", cloudCount);
