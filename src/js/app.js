@@ -413,7 +413,7 @@ window.setInterval(function () {
 
     if (Game.birdCount > 0 && Game.birdSound == null) {
       Game.birdSound = new Audio("./src/audio/flamingos.ogg");
-      Game.birdSound.volume = 0.075;
+      Game.birdSound.volume = 0.05;
       if (typeof Game.birdSound.loop == "boolean") {
         Game.birdSound.loop = true;
       } else {
