@@ -332,13 +332,12 @@ window.setInterval(function () {
 
       if ($(this).offset().left > $("#game").width()) {
         if (Game.rainSound !== null) {
-          Game.rainSound.fade = () => {
-            let timer = null;
-            Game.rainSound.volume -= 0.005;
-            timer = setTimeout(Game.rainSound.fade, 9);
-          };
-          Game.rainSound.pause();
-          Game.rainSound = null;
+          if (Game.rainSound.volume <= 0) {
+            Game.rainSound.pause();
+            Game.rainSound = null;
+          } else {
+            Game.rainSound.volume -= 0.5;
+          }
         }
 
         if ($(this).attr("data-lec") > 0) {
