@@ -406,7 +406,7 @@ window.setInterval(function () {
 
     if (Game.birdCount > 0 && Game.birdSound == null) {
       Game.birdSound = new Audio("./src/audio/flamingos.ogg");
-      Game.birdSound.volume = 0.5;
+      Game.birdSound.volume = 0.2;
       Game.birdSound.play();
     }
 
