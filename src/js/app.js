@@ -335,7 +335,7 @@ window.setInterval(function () {
           Game.rainSound.fade = () => {
             let timer = null;
             Game.rainSound.volume -= 0.005;
-            timer = setTimeout(Game.rainSound.fade, 5);
+            timer = setTimeout(Game.rainSound.fade, 9);
           };
           Game.rainSound.pause();
           Game.rainSound = null;
