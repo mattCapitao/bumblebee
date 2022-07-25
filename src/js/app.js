@@ -339,12 +339,19 @@ window.setInterval(function () {
         console.log("RainVolume: " + Game.rainSound.volume);
         if (Game.rainSound.volume <= 0.1) {
           console.log("kill rain sound fired");
+          let killRainSound = true;
           Game.rainSound.pause();
           Game.rainSound = null;
           Game.fadeRainSound = false;
         } else {
           Game.rainSound.volume -= 0.05;
         }
+      }
+
+      if (killRainSound == true && Game.rainSound != null) {
+        Game.rainSound.pause();
+        Game.rainSound = null;
+        Game.fadeRainSound = false;
       }
 
       if (Game.fadethunderSound == true) {
