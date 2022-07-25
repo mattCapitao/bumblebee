@@ -332,13 +332,13 @@ window.setInterval(function () {
 
       if (Game.fadeRainSound == true) {
         console.log("RainVolume: " + Game.rainSound.volume);
-        if (Game.rainSound.volume <= 0.05) {
+        if (Game.rainSound.volume <= 0.1) {
           console.log("kill sound fired");
           Game.rainSound.pause();
           Game.rainSound = null;
           Game.fadeRainSound = false;
         } else {
-          Game.rainSound.volume -= 0.025;
+          Game.rainSound.volume -= 0.05;
         }
       }
 
