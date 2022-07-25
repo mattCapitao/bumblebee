@@ -289,6 +289,7 @@ window.setInterval(function () {
           $(this).addClass("lightning");
           $(this).attr("data-lec", setLec);
           $(this).append('<img src="src/img/lightning2.gif" />');
+          Game.thunderSound = new Audio("./src/audio/zap1.mp3");
         }
       }
 
@@ -302,6 +303,8 @@ window.setInterval(function () {
           $(this).attr("data-lec", lec);
           if (lec < 1) {
             Game.lightningEffect = false;
+            Game.thunderSound.pause();
+            Game.thunderSound = null;
             $(this).html("");
             $(this).removeClass("lightning");
             $(this).addClass("hadLightning");
@@ -345,6 +348,8 @@ window.setInterval(function () {
       if ($(this).offset().left > $("#game").width()) {
         if ($(this).attr("data-lec") > 0) {
           Game.lightningEffect = false;
+          Game.thunderSound.pause();
+          Game.thunderSound = null;
         }
         if (Game.rainSound !== null) {
           Game.fadeRainSound = true;
