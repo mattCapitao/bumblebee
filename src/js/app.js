@@ -331,10 +331,10 @@ window.setInterval(function () {
       );
 
       if ($(this).offset().left > $("#game").width()) {
+        Game.rainSound.pause();
+        Game.rainSound = null;
         if ($(this).attr("data-lec") > 0) {
           Game.lightningEffect = false;
-          Game.rainSound.pause();
-          Game.rainSound = null;
         }
         $(this).remove();
         cloudCount--;
