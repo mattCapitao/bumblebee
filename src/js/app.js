@@ -401,6 +401,10 @@ window.setInterval(function () {
           '"></div>'
       );
       birdSpeed = 0;
+      Game.birdCount++;
+      Game.birdSound = new Audio("./src/audio/flamingos.mp3");
+      Game.birdSound.volume = 0.5;
+      Game.birdSound.play();
     }
 
     $(".bird").each(function () {
@@ -457,6 +461,11 @@ window.setInterval(function () {
         Game.score += Math.trunc(points);
         Level.birdSpeedMultiplier *= 1.005;
         Level.birdGenThreshold -= 0.04;
+        Game.birdCount--;
+        if (Game.birdSound !== null && Game.birdCount < 1) {
+          Game.birdSound.pause();
+          Game.birdSound = null;
+        }
       }
 
       if (

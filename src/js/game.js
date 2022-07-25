@@ -17,6 +17,7 @@ const Game = {
     Game.fadeRainSound = false;
     Game.thunderSound = null;
     Game.fadeThunderSound = false;
+    Game.birdCount = 0;
     $("#score").html(Game.score);
     $("#lives").html(Game.startingLives);
     Level.init();
