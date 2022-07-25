@@ -402,7 +402,7 @@ window.setInterval(function () {
       );
       birdSpeed = 0;
       Game.birdCount++;
-      Game.birdSound = new Audio("./src/audio/flamingos.mp3");
+      Game.birdSound = new Audio("./src/audio/flamingos.ogg");
       Game.birdSound.volume = 0.5;
       Game.birdSound.play();
     }
