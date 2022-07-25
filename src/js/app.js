@@ -27,7 +27,6 @@ let //Bee
   //Flower
   flowerCount = 0,
   maxFlowers = 20,
-  minFlowers = 1,
   flowerOddsModifier = 0,
   currentTimeSeconds = 0,
   currentFlowerPollen = 0,
@@ -92,7 +91,7 @@ window.setInterval(function () {
     if (
       (flowerCount <= maxFlowers &&
         rng(1, 1000) > newFlowerThreshold - flowerOddsModifier) ||
-      flowerCount < minFlowers
+      flowerCount < Game.minFlowers
     ) {
       flowerType = Math.trunc(rng(1, 4001) / 1000 + 1);
       flowerX = rng(1, 34);
