@@ -34,7 +34,7 @@ let //Bee
   flowerType = 0,
   flowerX = 0,
   flowerY = 0,
-  newFlowerThreshold = 991,
+  newFlowerThreshold = 989,
   flowerExpire = 0,
   flowerPollen = 0,
   lastFlowerY = 0,
