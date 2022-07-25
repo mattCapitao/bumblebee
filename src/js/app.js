@@ -219,6 +219,7 @@ window.setInterval(function () {
         cloudSpeed = 5;
         Game.rainEffect = true;
         Level.hasRained = true;
+        let rainSound = new Audio("./audio/rain.mp3");
       }
 
       //console.log("cloudClass: ", cloudClass);
