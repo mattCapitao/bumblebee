@@ -174,6 +174,7 @@ window.setInterval(function () {
             50,
             function () {
               $(this).remove();
+              flowerCount--;
             }
           );
 
