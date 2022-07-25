@@ -330,19 +330,20 @@ window.setInterval(function () {
         1
       );
 
-      if ($(this).offset().left > $("#game").width()) {
-        if (Game.rainSound !== null) {
-          if (Game.rainSound.volume <= 0) {
-            Game.rainSound.pause();
-            Game.rainSound = null;
-          } else {
-            Game.rainSound.volume -= 0.5;
-          }
+      if (Game.fadeRainSound == true) {
+        Game.rainSound.volume -= 0.5;
+        if (Game.rainSound.volume <= 0) {
+          Game.rainSound.pause();
+          Game.rainSound = null;
+          Game.fadeRainSound = false;
         }
+      }
 
+      if ($(this).offset().left > $("#game").width()) {
         if ($(this).attr("data-lec") > 0) {
           Game.lightningEffect = false;
         }
+        Game.fadeRainSound = true;
         $(this).remove();
         cloudCount--;
         //console.log("cloudCount", cloudCount);
