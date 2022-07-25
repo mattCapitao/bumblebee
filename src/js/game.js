@@ -16,6 +16,7 @@ const Game = {
     Game.rainSound = null;
     Game.fadeRainSound = false;
     Game.thunderSound = null;
+    Game.fadeThunderSound = false;
     $("#score").html(Game.score);
     $("#lives").html(Game.startingLives);
     Level.init();

@@ -285,7 +285,7 @@ window.setInterval(function () {
 
         if (lightningStrike + bolster > Level.lightningTreshold) {
           Game.lightningEffect = true;
-          let setLec = rng(50, 150);
+          let setLec = rng(75, 150);
           $(this).addClass("lightning");
           $(this).attr("data-lec", setLec);
           $(this).append('<img src="src/img/lightning2.gif" />');
@@ -304,8 +304,9 @@ window.setInterval(function () {
           $(this).attr("data-lec", lec);
           if (lec < 1) {
             Game.lightningEffect = false;
-            Game.thunderSound.pause();
-            Game.thunderSound = null;
+            if (Game.thunderSound !== null) {
+              Game.fadeThunderSound;
+            }
             $(this).html("");
             $(this).removeClass("lightning");
             $(this).addClass("hadLightning");
@@ -337,7 +338,7 @@ window.setInterval(function () {
       if (Game.fadeRainSound == true) {
         console.log("RainVolume: " + Game.rainSound.volume);
         if (Game.rainSound.volume <= 0.1) {
-          console.log("kill sound fired");
+          console.log("kill rain sound fired");
           Game.rainSound.pause();
           Game.rainSound = null;
           Game.fadeRainSound = false;
@@ -346,11 +347,25 @@ window.setInterval(function () {
         }
       }
 
+      if (Game.fadethunderSound == true) {
+        console.log("thunderVolume: " + Game.thunderSound.volume);
+        if (Game.thunderSound.volume <= 0.1) {
+          console.log("kill thunder sound fired");
+          Game.thunderSound.pause();
+          Game.thunderSound = null;
+          Game.fadeThunderSound = false;
+        } else {
+          Game.thunderSound.volume -= 0.05;
+        }
+      }
+
       if ($(this).offset().left > $("#game").width()) {
         if ($(this).attr("data-lec") > 0) {
           Game.lightningEffect = false;
-          Game.thunderSound.pause();
-          Game.thunderSound = null;
+
+          if (Game.thunderSound !== null) {
+            Game.fadeThunderSound;
+          }
         }
         if (Game.rainSound !== null) {
           Game.fadeRainSound = true;
