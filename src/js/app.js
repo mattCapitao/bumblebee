@@ -333,6 +333,7 @@ window.setInterval(function () {
       if ($(this).offset().left > $("#game").width()) {
         if ($(this).attr("data-lec") > 0) {
           Game.lightningEffect = false;
+          rainSound.pause();
         }
         $(this).remove();
         cloudCount--;
