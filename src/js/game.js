@@ -14,6 +14,7 @@ const Game = {
     Game.reset = false;
     Game.lightningEffect = false;
     Game.rainSound = null;
+    Game.fadeRainSound = false;
     $("#score").html(Game.score);
     $("#lives").html(Game.startingLives);
     Level.init();
